@@ -84,14 +84,13 @@ server.get('/', async (req, res) => {
     const name = req.query.name
     let videogames = await getAllVideoGames()
 
-
     if (name) {
         let videogameBd = await getDbInfo(); // me trae los juegos de bd 
         let videoNameBd = videogameBd.filter(el => el.name.toLowerCase().includes(name.toLowerCase()));
         if (videoNameBd.length) { res.status(200).send(videoNameBd) };
 
         let total = await gamesNameAll(name);// me trae los juegos de api
-        if (total) { res.status(200).send(total); } else {
+        if (total) { res.status(200).send(total) } else {
             res.status(404).send("no se encontro")
         };
     } else { res.status(200).send(videogames) }
@@ -120,21 +119,31 @@ server.post('/', async (req, res) => {
 server.get('/:id', async (req, res) => {
 
     const id = req.params.id;
-    let ruta = ` https://api.rawg.io/api/games/${id}?key=9f6776564ff3496c9da52ae39b57a613 `;
 
-    const apiUrl = await axios.get(ruta, { responseType: 'json' });
-    const obj = {
-        name: apiUrl.data.name,
-        description: apiUrl.data.description,
-        img: apiUrl.data.background_image,
-        rating: apiUrl.data.rating,
-        released: apiUrl.data.released,
-        platforms: (apiUrl.data.platforms.map(e => { return { name: e.platform.name } })),
-        genres: (apiUrl.data.genres.map(e => { return { name: e.name } }))
+
+    if (id.length < 7) {
+        let ruta = `https://api.rawg.io/api/games/${id}?key=9f6776564ff3496c9da52ae39b57a613`;
+
+        const apiUrl = await axios.get(ruta, { responseType: 'json' });
+        if (apiUrl) {
+            const obj = {
+                name: apiUrl.data.name,
+                description: apiUrl.data.description,
+                img: apiUrl.data.background_image,
+                rating: apiUrl.data.rating,
+                released: apiUrl.data.released,
+                platforms: (apiUrl.data.platforms.map((p) => p.platform.name).join(", ")),
+                genres: (apiUrl.data.genres.map(e => e.name).join(", ")),
+            }
+            res.status(200).send(obj)
+        }
     }
 
-    res.status(200).send(obj)
-
+    if (id.length > 7) {
+        let infoBd = await getAllVideoGames()
+        const guardar = infoBd.filter(e => e.id === id)
+        if (guardar) { res.status(200).send(guardar) }
+    }
 
 })
 
