@@ -22,11 +22,11 @@ module.exports = (sequelize) => {
 
     },
     rating: {
-      type: DataTypes.INTEGER
+      type: DataTypes.DECIMAL
     }, // cuidado con el numero , puede ser decimal
     platforms: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
 
     },
     createdInBd: {
