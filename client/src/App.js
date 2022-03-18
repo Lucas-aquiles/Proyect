@@ -1,10 +1,18 @@
 import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import LandingPage from "./components/LangPag";
 
+import Home from "./components/Home";
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Videogames</h1>
-    </div>
+    <Routes>
+
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/home" element={<Home />} />
+
+
+    </Routes>
   );
 }
 
