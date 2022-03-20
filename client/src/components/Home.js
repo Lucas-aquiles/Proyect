@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVideoGames } from '../actions';
+import { getVideoGames, filterCreated, orderByName, orderByRating, getGenres, orderByGenres } from '../actions';
 import Card from './Card.js';
 import Search from './Buscador.js';
 import Paginado from './Paginado'
@@ -11,6 +12,8 @@ export default function Home() {
 
     const dispatch = useDispatch()
     const allVideoGames = useSelector((state) => state.videogames)
+    const allGenres = useSelector((state) => state.genres)
+    const [orden, setOrden] = useState('');
     const [currentPage, setCurrentPage] = useState(1);                                           // 1      // 2
     const [videogamePerPage, setVideogamePerPage] = useState(15)                                 // 15 //  15
     const indexOfLastVideoGames = currentPage * videogamePerPage                               // 1  * 15   // 30
@@ -24,25 +27,96 @@ export default function Home() {
 
 
     useEffect(() => {
+        dispatch(getGenres())
+    }, [])
+
+
+    useEffect(() => {
         dispatch(getVideoGames())
     }, [])
 
+    function handleFilterCreated(e) {
+        e.preventDefault();
+        dispatch(filterCreated(e.target.value))
+
+    }
+    function handleOrderByName(e) {
+        e.preventDefault();
+        dispatch(orderByName(e.target.value));
+        setCurrentPage(1);
+        setOrden(`Ordenado ${e.target.value}`)
+    }
+    function handleOrderByRating(e) {
+        e.preventDefault();
+        dispatch(orderByRating(e.target.value));
+        setCurrentPage(1);
+        setOrden(`Ordenado ${e.target.value}`)
+    }
+
+    function handleOrderGenres(e) {
+        e.preventDefault();
+        dispatch(orderByGenres(e.target.value));
+        setCurrentPage(1);
+        setOrden(`Ordenado ${e.target.value}`)
+
+    }
+    function handleReseteo(e) {
+        e.preventDefault();
+        dispatch(getVideoGames())
+
+    }
 
 
     return (
 
 
         <div>
+
             <Search />
+            <button onClick={e => handleReseteo(e)} > VOlver a cargar los Videogames</button>
+
+
+
+            <div>
+                <Link to="/videogames"> Crear videogames</Link>
+                <div>
+                    <select onChange={e => handleOrderByName(e)}>
+                        <option > Ordenar</option>
+                        <option value="az" > A - Z </option>
+                        <option value="za"> Z - A </option>
+                    </select>
+                </div>
+                <div>
+                    <select onChange={e => handleOrderByRating(e)} >
+                        <option  > rating</option>
+                        <option value="mr" > Mejores rating</option>
+                        <option value="pr" > Peores rating</option>
+                    </select>
+                </div>
+
+                <select onChange={e => handleFilterCreated(e)}>
+                    <option>  Videogames </option>
+                    <option value="all" > TODOS </option>
+                    <option value="api" > EXISTENTES </option>
+                    <option value="created">  Creados x Usuario </option>
+                </select>
+                <div>
+                    <select onChange={e => handleOrderGenres(e)}>
+                        <option> Genero </option>
+                        {allGenres.map((e) => (
+                            <option key={e.id} value={e.name}> {e.name}</option>
+
+                        ))}
+                    </select>
+                </div>
+            </div>
+
             <Paginado videogamePerPage={videogamePerPage}
                 allVideoGames={allVideoGames.length}
                 paginado={paginado}
             />
             {/* 0 - 15  // 15-30 // 30/45   */}
             {currentVideoGames.map(e => <Card key={e.id} name={e.name} img={e.img} genres={e.genres} />)}
-
-
-
 
         </div>
 

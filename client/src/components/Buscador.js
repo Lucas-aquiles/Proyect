@@ -1,7 +1,7 @@
 import React from 'react';
 import './Buscador.css';
-import Filtros from './Filtros';
 export default function Search() {
+
     return (< div className='search'>
 
         <form >
@@ -18,7 +18,7 @@ export default function Search() {
 
         < h1 > Soy un nav </h1 >
 
-        <Filtros />
+
 
     </div>
     )

@@ -40,7 +40,8 @@ const gamesAll = async () => {
                 id: el.id,
                 name: el.name,
                 img: el.background_image,
-                genres: el.genres.map((g) => g.name).join(", "),
+                rating: el.rating,
+                genres: el.genres.map((g) => g.name),
                 platforms: el.platforms.map((p) => p.platform.name).join(", "),
             }
         });

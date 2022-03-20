@@ -6,8 +6,6 @@ const { Videogame, Genders, Intermedio } = require('../db');
 
 
 
-
-
 server.get('/', async (req, res) => {
     ruta = "https://api.rawg.io/api/genres?key=9f6776564ff3496c9da52ae39b57a613";
     const dateEsperada = await axios.get(ruta);

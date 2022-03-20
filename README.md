@@ -72,13 +72,8 @@ La idea general es crear una aplicación en la cual se puedan ver los distintos 
 
 ### Únicos Endpoints/Flags que pueden utilizar
 
-9f6776564ff3496c9da52ae39b57a613
-
-- GET https://api.rawg.io/api/games?key=9f6776564ff3496c9da52ae39b57a613
+- GET https://api.rawg.io/api/games?key=
 - GET https://api.rawg.io/api/games?search={game}
-
-https://api.rawg.io/api/games?search={morTAL}&key=9f6776564ff3496c9da52ae39b57a613
-
 - GET https://api.rawg.io/api/genres
 - GET https://api.rawg.io/api/games/{id}
 
