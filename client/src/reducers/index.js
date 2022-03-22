@@ -1,7 +1,8 @@
 const initialState = {
   videogames: [],
   allVideoGames: [],
-  genres: []
+  genres: [],
+  platforms: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -84,8 +85,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         genres: action.payload,
-
-
+      };
+    case "GET_PLATFORMS":
+      return {
+        ...state,
+        platforms: action.payload
       };
 
     case 'ORDER_BY_GENRES':
@@ -100,8 +104,18 @@ function rootReducer(state = initialState, action) {
         ...state,
         videogames: genresFiltrado
 
-      }
+      };
 
+    case 'SEARCH_VIDEO_GAMES':
+
+      return {
+        ...state,
+        videogames: action.payload
+      };
+    case 'POST_VIDEOGAMES':
+      return {
+        ...state,
+      };
 
 
     default:

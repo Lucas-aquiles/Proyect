@@ -4,7 +4,6 @@ const server = require("express").Router();
 const { Videogame, Genders, Intermedio } = require('../db');
 
 
-
 const gamesNameAll = async (name) => {
     var ruta = "9f6776564ff3496c9da52ae39b57a613"
     var url = `https://api.rawg.io/api/games?search=${name}}&key=${ruta}`
@@ -24,10 +23,10 @@ const gamesNameAll = async (name) => {
 }
 
 
-
 //https://api.rawg.io/api/genres&key=9f6776564ff3496c9da52ae39b57a613
 
 const gamesAll = async () => {
+
     // https://api.rawg.io/api/games?key=9f6776564ff3496c9da52ae39b57a613
     // https://api.rawg.io/api/games?key=9f6776564ff3496c9da52ae39b57a613&page=2
     let pagApi = [];
@@ -47,24 +46,38 @@ const gamesAll = async () => {
         });
         pagApi = pagApi.concat(apiData)
     }
+
     return pagApi
-
-
-
 };
 
 
 const getDbInfo = async () => {
-    return await Videogame.findAll({
+    const dbInfo = await Videogame.findAll({
         include: {
             model: Genders,
-            attributes: ['name'],
+            attributes: ["name"],
             through: {
                 attributes: [],
             },
         }
     })
+    const dbInfoNew = dbInfo.map((e) => {
+        return {
+            id: e.id,
+            name: e.name,
+            description: e.description,
+            rating: e.rating,
+            released: e.released,
+            createdInBd: e.createdInBd,
+            platforms: e.platforms.map(e => e),
+            genres: e.genders.map(e => e.name)
+        }
+    })
+
+    return dbInfoNew
+
 }
+
 
 const getAllVideoGames = async () => {
     const apiInfo = await gamesAll();
@@ -72,6 +85,7 @@ const getAllVideoGames = async () => {
     const infoAll = apiInfo.concat(dbInfo)
     return infoAll;
 }
+
 // router.get('/videogames?', async (req, res) => {
 //     const name = req.query.name
 //     let total = await gamesNameAll(name)
@@ -80,6 +94,25 @@ const getAllVideoGames = async () => {
 // })
 
 
+server.get('/plat', async (req, res) => {
+    const getPlatfo = await gamesAll();
+    const mapeo = getPlatfo.map((e) => e.platforms).join("  ")
+    // const replac = mapeo.map((e) => e.replaceAll(",", ""))
+    const casi = mapeo.replaceAll(",", " ").split("  ")
+    let newe = []
+    for (let i = 0; casi.length > i; i++) {
+        for (let j = 1; casi.length >= j; j++) {
+            if (casi[i] === casi[j]) {
+                if (!newe.includes(casi[i])) {
+                    newe.push(casi[i])
+                }
+            }
+        }
+
+    }
+    res.status(200).json(newe)
+})
+
 server.get('/', async (req, res) => {
 
     const name = req.query.name
@@ -87,6 +120,7 @@ server.get('/', async (req, res) => {
 
     if (name) {
         let videogameBd = await getDbInfo(); // me trae los juegos de bd 
+
         let videoNameBd = videogameBd.filter(el => el.name.toLowerCase().includes(name.toLowerCase()));
         if (videoNameBd.length) { res.status(200).send(videoNameBd) };
 
@@ -94,7 +128,7 @@ server.get('/', async (req, res) => {
         if (total) { res.status(200).send(total) } else {
             res.status(404).send("no se encontro")
         };
-    } else { res.status(200).send(videogames) }
+    } else { res.status(200).json(videogames) }
 
 
 
@@ -102,10 +136,9 @@ server.get('/', async (req, res) => {
 
 
 server.post('/', async (req, res) => {
-    let { name, description, rating, platforms, createdInBd, genres } = req.body;
-
+    let { name, description, rating, released, platforms, createdInBd, genres } = req.body;
     let gameCreat = await Videogame.create({
-        name, description, rating, platforms, createdInBd
+        name, description, rating, platforms, released, createdInBd
     })
 
     let generoDb = await Genders.findAll({
@@ -113,10 +146,14 @@ server.post('/', async (req, res) => {
             name: genres
         }
     })
-    gameCreat.addGenders(generoDb)
-    res.send("Games creado")
-}
-)
+
+    await gameCreat.addGenders(generoDb)
+    res.status(200).send("Creado con exito");
+});
+
+
+
+
 server.get('/:id', async (req, res) => {
 
     const id = req.params.id;
@@ -136,9 +173,11 @@ server.get('/:id', async (req, res) => {
                 platforms: (apiUrl.data.platforms.map((p) => p.platform.name).join(", ")),
                 genres: (apiUrl.data.genres.map(e => e.name).join(", ")),
             }
-            res.status(200).send(obj)
+            res.status(200).json(obj)
         }
+
     }
+
 
     if (id.length > 7) {
         let infoBd = await getAllVideoGames()
@@ -146,7 +185,10 @@ server.get('/:id', async (req, res) => {
         if (guardar) { res.status(200).send(guardar) }
     }
 
+
+
 })
+
 
 
 

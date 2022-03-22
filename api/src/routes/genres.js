@@ -22,7 +22,7 @@ server.get('/', async (req, res) => {
         })
     })
     const allGenders = await Genders.findAll();
-    res.status(200).send(allGenders);
+    res.status(200).json(allGenders);
 })
 
 

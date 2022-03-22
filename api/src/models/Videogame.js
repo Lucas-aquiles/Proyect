@@ -19,14 +19,19 @@ module.exports = (sequelize) => {
 
       allowNull: false,
       primaryKey: true
-
     },
+
     rating: {
       type: DataTypes.DECIMAL
     }, // cuidado con el numero , puede ser decimal
     platforms: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(Sequelize.TEXT),
       allowNull: true
+
+
+    },
+    released: {
+      type: DataTypes.STRING
 
     },
     createdInBd: {
@@ -35,8 +40,8 @@ module.exports = (sequelize) => {
       defaultValue: true
       // me sirve para buscar los videos juegos creados para base de datos
     }
-
-  });
+  },
+    { timestamps: false });
 };
 
 // ID: * No puede ser un ID de un videojuego ya existente en la API rawg

@@ -10,6 +10,7 @@ import Paginado from './Paginado'
 
 export default function Home() {
 
+    var imge = "https://img.freepik.com/vector-gratis/consola-juegos-letras-letrero-neon-fondo-ladrillo_1262-11854.jpg?size=338&ext=jpg";
     const dispatch = useDispatch()
     const allVideoGames = useSelector((state) => state.videogames)
     const allGenres = useSelector((state) => state.genres)
@@ -78,7 +79,7 @@ export default function Home() {
 
 
             <div>
-                <Link to="/videogames"> Crear videogames</Link>
+                <Link to="/create"> Crear videogames</Link>
                 <div>
                     <select onChange={e => handleOrderByName(e)}>
                         <option > Ordenar</option>
@@ -93,7 +94,6 @@ export default function Home() {
                         <option value="pr" > Peores rating</option>
                     </select>
                 </div>
-
                 <select onChange={e => handleFilterCreated(e)}>
                     <option>  Videogames </option>
                     <option value="all" > TODOS </option>
@@ -101,25 +101,26 @@ export default function Home() {
                     <option value="created">  Creados x Usuario </option>
                 </select>
                 <div>
+
                     <select onChange={e => handleOrderGenres(e)}>
                         <option> Genero </option>
+
                         {allGenres.map((e) => (
                             <option key={e.id} value={e.name}> {e.name}</option>
-
                         ))}
                     </select>
                 </div>
             </div>
-
-            <Paginado videogamePerPage={videogamePerPage}
-                allVideoGames={allVideoGames.length}
-                paginado={paginado}
-            />
+            <div className=" box grid-responsive">
+                <Paginado videogamePerPage={videogamePerPage}
+                    allVideoGames={allVideoGames.length}
+                    paginado={paginado}
+                /> </div>
             {/* 0 - 15  // 15-30 // 30/45   */}
-            {currentVideoGames.map(e => <Card key={e.id} name={e.name} img={e.img} genres={e.genres} />)}
-
+            <article className=" box grid-responsive">
+                {currentVideoGames.map(e => <Card key={e.id} name={e.name} img={e.img ? e.img : imge} genres={e.genres} />)}
+            </article>
         </div>
-
     );
 }
 
