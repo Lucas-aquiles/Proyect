@@ -4,13 +4,35 @@ import { getGenres, getPlatforms, postVideoGames } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
+
+
+export function validate(input) {
+    let errors = {};
+    if (!input.name) {
+        errors.name = 'Name is required';
+    }
+
+
+    return errors;
+
+
+
+};
+
+
+
+
+
+
+
+
 export default function Form() {
     const dispatch = useDispatch()
     let navigate = useNavigate();
     const allGenres = useSelector((state) => state.genres);
     const allPlatforms = useSelector((state) => state.platforms);
 
-
+    let [error, setError] = useState('');
     const [input, setInput] = useState({
 
         name: " ",
@@ -36,6 +58,10 @@ export default function Form() {
             ...input,
             [e.target.name]: e.target.value
         })
+
+        let objError = validate({ ...input, [e.target.name]: e.target.value });
+        setError(objError);
+
     }
 
     // function handleSelect(e) {
@@ -63,20 +89,24 @@ export default function Form() {
         navigate('/home')
     }
 
-    // function handleDelete(e) {
-    //     setInput({
-    //         ...input,
-    //         // [e.target.name]: input.platforms.filter(el => el !== e)
-    //         platforms: input.platforms.filter(el => el !== e),
-    //         genres: input.genres.filter(el => el !== e)
+    function handleDelete(e) {
+        setInput({
+            ...input,
+            // [e.target.name]: input.platforms.filter(el => el !== e)
+            platforms: input.platforms.filter(el => el !== e),
+            genres: input.genres.filter(el => el !== e)
 
-    //     })
-    // }
+        })
+    }
+
     function handleSelect(e) {
         setInput({
             ...input,
             [e.target.name]: input[e.target.name].concat(e.target.value)
         })
+
+        let objError = validate({ ...input, [e.target.name]: e.target.value });
+        setError(objError);
     }
 
 
@@ -93,6 +123,7 @@ export default function Form() {
                         name="name"
                         onChange={handleChange}
                     />
+                    {error.name && (<p>{error.name} </p>)}
                 </div>
                 <div>
                     <label>Description:</label>
@@ -134,19 +165,16 @@ export default function Form() {
                             <option key={index} value={e.name}> {e.name}</option>
                         ))}
                     </select>
-
-
-
-
-                    {/* <select onChange={handleSelect} value={input.name} name="genres" >
+                    <ul><li>{input.genres.map(ele => < >  {ele + "  "}   <button onClick={() => handleDelete(ele)}> x</button> </>)} </li></ul>
+                </div>
+                {/* <select onChange={handleSelect} value={input.name} name="genres" >
                         {allGenres.map(el => (
                             <option key={el.id} >{el.name} </option>
 
                         ))}
-                    </select>
-                    <ul><li>{input.genres.map(ele => < >  {ele + "  "}   <button onClick={() => handleDelete(ele)}> x</button> </>)} </li></ul> */}
-                    {/* <button onClick={() => handleDelete(e)}> x</button> */}
-                </div>
+                    </select> */}
+
+
 
                 <div>
                     <label>Platforms: </label>
@@ -158,10 +186,11 @@ export default function Form() {
                         ))}
                     </select>
 
-                    {/* <ul><li>{input.platforms.map(e => <>  {e + "  "} <button onClick={() => handleDelete(e)}> x</button> </>)}   </li>
-                    </ul> */}
+                    <ul><li>{input.platforms.map(e => <>  {e + "  "} <button onClick={() => handleDelete(e)}> x</button> </>)}   </li>
+                    </ul>
 
                 </div>
+
                 <button type='submit' >  Crear Personaje </button>
 
             </form >

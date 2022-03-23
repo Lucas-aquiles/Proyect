@@ -8,7 +8,7 @@ export default function Card({ name, img, genres, id }) {
             <Link to={`/details/${id}`}> Ver</Link>
             <h3>  {name}   </h3>
             <img src={img} width="200" height="200" alt="" />
-            <h5> {genres} </h5>
+            <h5>{genres} </h5>
 
 
 

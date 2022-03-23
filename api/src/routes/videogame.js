@@ -15,7 +15,7 @@ const gamesNameAll = async (name) => {
             id: el.id,
             name: el.name,
             img: el.background_image,
-            genres: el.genres.map(e => e.name).join(", "),
+            genres: el.genres.map(e => e.name).join(" , ")
         }
     });
     return apiData;
@@ -66,7 +66,7 @@ const getDbInfo = async () => {
             released: e.released,
             createdInBd: e.createdInBd,
             platforms: e.platforms.map(e => e),
-            genres: e.genders.map(e => e.name)
+            genres: e.genders.map(e => e.name).join(", ")
         }
     })
 
@@ -128,18 +128,41 @@ server.get('/', async (req, res) => {
 
 server.post('/', async (req, res) => {
     let { name, description, rating, released, platforms, createdInBd, genres } = req.body;
-    let gameCreat = await Videogame.create({
-        name, description, rating, platforms, released, createdInBd
-    })
+    let nameChange = name.trim().charAt().toLocaleUpperCase() + name.trim().slice(1,)
 
-    let generoDb = await Genders.findAll({
-        where: {
-            name: genres
-        }
+    const usuario = await Videogame.findAll({
+        where: { name: nameChange }
     })
+    console.log(usuario.map(e => e.toJSON()))
+    //     where: {
+    //         name: nameChange
+    //     }
+    // }
 
-    await gameCreat.addGenders(generoDb)
-    res.status(200).send("Creado con exito");
+
+    if (usuario.length === 0) {
+        let gameCreat = await Videogame.create({
+
+            name: nameChange,
+            description: description,
+            released: released,
+            rating: rating,
+            platforms: platforms,
+            createdInBd
+        })
+        let generoDb = await Genders.findAll({
+            where: {
+                name: genres
+            }
+        })
+
+        await gameCreat.addGenders(generoDb)
+        res.status(200).send("Creado con exito");
+
+    } else {
+        res.status(404).send("Nombre ya usado");
+    }
+
 });
 
 
@@ -179,7 +202,7 @@ server.get('/:id', async (req, res) => {
                 rating: idBd[0].rating,
                 released: idBd[0].released,
                 platforms: (idBd[0].platforms.map((p) => p)).join(", "),
-                genres: (idBd[0].genres.map(e => e)).join(", ")
+                genres: (idBd[0].genres)
             }
             res.status(200).send(objBd)
         }
