@@ -22,11 +22,7 @@ const gamesNameAll = async (name) => {
 
 }
 
-
-//https://api.rawg.io/api/genres&key=9f6776564ff3496c9da52ae39b57a613
-
 const gamesAll = async () => {
-
     // https://api.rawg.io/api/games?key=9f6776564ff3496c9da52ae39b57a613
     // https://api.rawg.io/api/games?key=9f6776564ff3496c9da52ae39b57a613&page=2
     let pagApi = [];
@@ -40,7 +36,7 @@ const gamesAll = async () => {
                 name: el.name,
                 img: el.background_image,
                 rating: el.rating,
-                genres: el.genres.map((g) => g.name),
+                genres: el.genres.map((g) => g.name).join(" , "),
                 platforms: el.platforms.map((p) => p.platform.name).join(", "),
             }
         });
@@ -86,12 +82,7 @@ const getAllVideoGames = async () => {
     return infoAll;
 }
 
-// router.get('/videogames?', async (req, res) => {
-//     const name = req.query.name
-//     let total = await gamesNameAll(name)
-//     let traer = total.slice(0, 15);
-//     res.status(200).send(traer)
-// })
+
 
 
 server.get('/plat', async (req, res) => {
@@ -166,27 +157,34 @@ server.get('/:id', async (req, res) => {
         if (apiUrl) {
             const obj = {
                 name: apiUrl.data.name,
-                description: apiUrl.data.description,
+                description: apiUrl.data.description.replace(/(<([^>]+)>)/ig, ''),
                 img: apiUrl.data.background_image,
                 rating: apiUrl.data.rating,
                 released: apiUrl.data.released,
-                platforms: (apiUrl.data.platforms.map((p) => p.platform.name).join(", ")),
-                genres: (apiUrl.data.genres.map(e => e.name).join(", ")),
+                platforms: (apiUrl.data.platforms.map((p) => p.platform.name).join(" , ")),
+                genres: (apiUrl.data.genres.map(e => e.name).join(" , ")),
             }
             res.status(200).json(obj)
         }
-
     }
-
 
     if (id.length > 7) {
         let infoBd = await getAllVideoGames()
-        const guardar = infoBd.filter(e => e.id === id)
-        if (guardar) { res.status(200).send(guardar) }
+        const idBd = infoBd.filter(e => e.id === id)
+
+        if (idBd) {
+            const objBd = {
+                name: idBd[0].name,
+                description: idBd[0].description,
+                rating: idBd[0].rating,
+                released: idBd[0].released,
+                platforms: (idBd[0].platforms.map((p) => p)).join(", "),
+                genres: (idBd[0].genres.map(e => e)).join(", ")
+            }
+            res.status(200).send(objBd)
+        }
+
     }
-
-
-
 })
 
 

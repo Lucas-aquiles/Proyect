@@ -2,9 +2,9 @@ const initialState = {
   videogames: [],
   allVideoGames: [],
   genres: [],
-  platforms: []
+  platforms: [],
+  details: []
 }
-
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_VIDEO_GAMES":
@@ -14,7 +14,7 @@ function rootReducer(state = initialState, action) {
         allVideoGames: action.payload
 
       };
-    case "FILTER_CREATED":
+    case "FILTER_ORIGIN":
       const allVideoGames2 = state.allVideoGames
 
       const statusFiltrado = action.payload === "created" ? allVideoGames2.filter(el => el.createdInBd) :
@@ -112,15 +112,21 @@ function rootReducer(state = initialState, action) {
         ...state,
         videogames: action.payload
       };
+
     case 'POST_VIDEOGAMES':
       return {
         ...state,
       };
 
-
+    case "DETAILS_ID":
+      return {
+        ...state,
+        details: action.payload
+      };
     default:
       return { ...state };
   }
+
 
   // if (action.type === "GET_VIDEO_GAMES") {
   //   return {

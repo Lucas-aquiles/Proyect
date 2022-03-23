@@ -24,10 +24,11 @@ export default function Form() {
 
     useEffect(() => {
         dispatch(getGenres());
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
     useEffect(() => {
         dispatch(getPlatforms())
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 
     function handleChange(e) {
@@ -37,12 +38,15 @@ export default function Form() {
         })
     }
 
-    function handleSelect(e) {
-        setInput({
-            ...input,
-            [e.target.name]: input[e.target.name].concat(e.target.value)
-        })
-    }
+    // function handleSelect(e) {
+    //     setInput({
+    //         ...input,
+    //         [e.target.name]: input[e.target.name].concat(e.target.value)
+    //     })
+    // }
+
+
+
     function handleSubmit(e) {
         e.preventDefault()
         dispatch(postVideoGames(input))
@@ -58,6 +62,24 @@ export default function Form() {
         })
         navigate('/home')
     }
+
+    // function handleDelete(e) {
+    //     setInput({
+    //         ...input,
+    //         // [e.target.name]: input.platforms.filter(el => el !== e)
+    //         platforms: input.platforms.filter(el => el !== e),
+    //         genres: input.genres.filter(el => el !== e)
+
+    //     })
+    // }
+    function handleSelect(e) {
+        setInput({
+            ...input,
+            [e.target.name]: input[e.target.name].concat(e.target.value)
+        })
+    }
+
+
     return (
         <div>
             <Link to='/home'> <button> VOLVER</button> </Link>
@@ -65,22 +87,20 @@ export default function Form() {
             <h1>Crea tu Video Games</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Nombre: </label>
+                    <label>Nombre:</label>
                     <input type="text"
                         value={input.name}
                         name="name"
                         onChange={handleChange}
-                        required="required"
                     />
                 </div>
                 <div>
-                    <label>Description: </label>
+                    <label>Description:</label>
                     <input type="text"
                         value={input.description}
                         name="description"
                         maxLength={250}
                         onChange={handleChange}
-                        required="required"
                     />
                 </div>
                 <div>
@@ -92,7 +112,6 @@ export default function Form() {
                         placeholder="Rating"
                         min="0"
                         max="10"
-                        required="required"
 
                     />
                 </div>
@@ -103,39 +122,51 @@ export default function Form() {
                         name="released"
                         onChange={handleChange}
                         placeholder="Released"
-                        required="required"
                     /> </div>
 
+
+
                 <div>
+
                     <label>Generos: </label>
-                    <select value={input.genres} name="genres" required="required"
-                        onChange={handleSelect}
-                    >
-                        {allGenres.map(e => (
-                            <option value={e.name}>{e.name} </option>
+                    <select name='genres' onChange={e => handleSelect(e)}>
+                        {allGenres.map((e, index = 1) => (
+                            <option key={index} value={e.name}> {e.name}</option>
                         ))}
                     </select>
-                    <ul><li>{input.genres.map(e => e + ",")} </li></ul>
+
+
+
+
+                    {/* <select onChange={handleSelect} value={input.name} name="genres" >
+                        {allGenres.map(el => (
+                            <option key={el.id} >{el.name} </option>
+
+                        ))}
+                    </select>
+                    <ul><li>{input.genres.map(ele => < >  {ele + "  "}   <button onClick={() => handleDelete(ele)}> x</button> </>)} </li></ul> */}
+                    {/* <button onClick={() => handleDelete(e)}> x</button> */}
                 </div>
 
                 <div>
                     <label>Platforms: </label>
-                    <select value={input.platforms} name="platforms" required="required"
-
-                        onChange={handleSelect}
-                    >
-                        {allPlatforms.map(e => (
-                            <option value={e}>{e} </option>
+                    <select name="platforms" onChange={e => handleSelect(e)}>
+                        {allPlatforms.map((e, index = 1) => (
+                            // <div  key={e.id}>
+                            <option key={index} value={e}>{e} </option>
+                            // </div>
                         ))}
                     </select>
-                    <ul><li>{input.platforms.map(e => e + ",")} </li></ul>
+
+                    {/* <ul><li>{input.platforms.map(e => <>  {e + "  "} <button onClick={() => handleDelete(e)}> x</button> </>)}   </li>
+                    </ul> */}
 
                 </div>
                 <button type='submit' >  Crear Personaje </button>
 
-            </form>
+            </form >
 
-        </div>
+        </div >
     );
 }
 

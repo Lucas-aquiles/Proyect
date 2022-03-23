@@ -15,14 +15,13 @@ export default function Search() {
 
     function handleInputChange(e) {
         e.preventDefault()
-        // setName(e.target.value)
         setName(e.target.value)
     }
     function handleSubmit(e) {
-        e.preventDefault()
-        setName({ ...name })
-
-        dispatch(searchVideoGames(name))
+        e.preventDefault();
+        setName({ ...name });
+        dispatch(searchVideoGames(name));
+        setName("")
     }
 
 
@@ -33,7 +32,7 @@ export default function Search() {
             <div>
                 <label >Buscador: </label>
                 <input
-                    value={name.name}
+                    value={name}
                     onChange={(e) => handleInputChange(e)}
                     type="text"
                     placeholder='Buscar..'

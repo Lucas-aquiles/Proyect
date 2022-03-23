@@ -5,6 +5,7 @@ import LandingPage from "./components/LangPag";
 
 import Home from "./components/Home";
 import Form from "./components/Form";
+import Details from './components/Details';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<Home />} />
       <Route path='/create' element={<Form />} />
+      <Route path='details/:id' element={<Details />} />
 
     </Routes>
   );
