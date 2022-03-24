@@ -127,18 +127,14 @@ server.get('/', async (req, res) => {
 
 
 server.post('/', async (req, res) => {
+
+
     let { name, description, rating, released, platforms, createdInBd, genres } = req.body;
     let nameChange = name.trim().charAt().toLocaleUpperCase() + name.trim().slice(1,)
 
     const usuario = await Videogame.findAll({
         where: { name: nameChange }
     })
-    console.log(usuario.map(e => e.toJSON()))
-    //     where: {
-    //         name: nameChange
-    //     }
-    // }
-
 
     if (usuario.length === 0) {
         let gameCreat = await Videogame.create({
@@ -164,6 +160,7 @@ server.post('/', async (req, res) => {
     }
 
 });
+
 
 
 
