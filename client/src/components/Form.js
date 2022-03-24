@@ -165,7 +165,7 @@ export default function Form() {
                             <option key={index} value={e.name}> {e.name}</option>
                         ))}
                     </select>
-                    <ul><li>{input.genres.map(ele => < >  {ele + "  "}   <button onClick={() => handleDelete(ele)}> x</button> </>)} </li></ul>
+                    <ul>{input.genres.map((ele, index = 1) => <li key={index} >  {ele + "  "}   <button onClick={() => handleDelete(ele)}> x</button> </li>)} </ul>
                 </div>
                 {/* <select onChange={handleSelect} value={input.name} name="genres" >
                         {allGenres.map(el => (
@@ -186,10 +186,11 @@ export default function Form() {
                         ))}
                     </select>
 
-                    <ul><li>{input.platforms.map(e => <>  {e + "  "} <button onClick={() => handleDelete(e)}> x</button> </>)}   </li>
+                    <ul> {input.platforms.map((e, index = 1) => < li key={index}>  {e + "  "} <button onClick={() => handleDelete(e)}> x</button> </li>)}
                     </ul>
 
                 </div>
+
 
                 <button type='submit' >  Crear Personaje </button>
 
