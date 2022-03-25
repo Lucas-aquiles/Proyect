@@ -1,59 +1,93 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
-import { getGenres, getPlatforms, postVideoGames } from '../actions';
-import { useDispatch, useSelector } from 'react-redux';
-
-
-
-
-export function validate(input) {
-    let errors = {};
-    if (!input.name) {
-        errors.name = 'Name is required';
-    }
-
-
-    return errors;
-
-
-
-};
-
-
-
-
-
-
+import { postVideoGames } from '../actions';
+import { useDispatch } from 'react-redux';
+import FormRama from './FormGyP';
 
 
 export default function Form() {
+
     const dispatch = useDispatch()
     let navigate = useNavigate();
-    const allGenres = useSelector((state) => state.genres);
-    const allPlatforms = useSelector((state) => state.platforms);
 
+    let [botonActivo, setBotonActivo] = useState(false);
     let [error, setError] = useState('');
+    console.log(error)
     const [input, setInput] = useState({
-
         name: " ",
         description: " ",
         rating: " ",
+        released: " ",
         platforms: [],
         genres: []
-
     })
 
 
-    useEffect(() => {
-        dispatch(getGenres());
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    useEffect(() => {
-        dispatch(getPlatforms())
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if ((input.name === "" || input.description === "" || input.rating === " " || input.released === " " || input.platforms.length === 0 || input.genres.length === 0)) {
+            return alert("No se puede enviar , complete las categorias");
+        } else {
+            dispatch(postVideoGames(input));
+            alert("Personaje Creado");
+            setInput({
+                name: " ",
+                description: " ",
+                rating: " ",
+                released: " ",
+                genres: [],
+                platforms: [],
+            })
+            navigate('/home')
+        }
+    }
+
+
+
+    function handleSelect(e) {
+        e.preventDefault();
+        setInput({
+            ...input,
+            [e.target.name]: input[e.target.name].concat(e.target.value)
+        })
+        let objError = validate({ ...input, [e.target.name]: e.target.value });
+        setError(objError);
+    }
+
+    function handleSelect1(e) {
+        e.preventDefault();
+        setInput({
+            ...input,
+            [e.target.name]: input[e.target.name].concat(e.target.value)
+        })
+        let objError = validate({ ...input, [e.target.name]: e.target.value });
+        setError(objError);
+    }
+
+
+
+    function handleDelete(e) {
+        e.preventDefault()
+        setInput({
+            ...input,
+            genres: []
+
+        })
+    }
+    function handleDelete1(e) {
+        e.preventDefault()
+        setInput({
+            ...input,
+            platforms: []
+
+        })
+    }
 
     function handleChange(e) {
+        e.preventDefault()
         setInput({
             ...input,
             [e.target.name]: e.target.value
@@ -61,143 +95,81 @@ export default function Form() {
 
         let objError = validate({ ...input, [e.target.name]: e.target.value });
         setError(objError);
-
     }
+    function validate(input) {
+        let errors = {};
+        let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+        let regexRating = /^[0-9]$/;
+        let regexDescription = /^.{1,255}$/;
+        let regexFecha = /^(0[1-9]|[1-2]\d|3[01])(\/)(0[1-9]|1[012])\2(\d{4})$/;
+        let formularioValidado = true;
 
-    // function handleSelect(e) {
-    //     setInput({
-    //         ...input,
-    //         [e.target.name]: input[e.target.name].concat(e.target.value)
-    //     })
-    // }
 
+        if (!input.name.trim()) {
+            formularioValidado = false;
+            errors.name = 'Nombre es requerido';
+        } else if (!regexName.test(input.name.trim())) {
+            errors.name = "El campo nombre solo acepta letras y espacios en blanco";
+        }
+        if (!input.description.trim()) {
+            formularioValidado = false;
+            errors.description = "Descripcion es requerido"
+        } else if (!regexDescription.test(input.description.trim())) {
+            formularioValidado = false;
+            errors.description = "El campo comentarios no debe exceder los 255 caracteres";
+        }
+        if (!input.rating.trim()) {
+            formularioValidado = false;
+            errors.rating = "Rating es requerido"
+        } else if (!regexRating.test(input.rating.trim())) {
+            formularioValidado = false;
+            errors.rating = "Rating es requerido , del 0 al 9";
+        }
+        if (!input.released.trim()) {
+            formularioValidado = false;
+            errors.released = "Released es requerido"
+        } else if (!regexFecha.test(input.released.trim())) {
+            errors.released = "Released es requerido , formato = 28/02/2021, solo acepta numeros"
+        }
 
+        if (input.genres.length === 0) {
+            formularioValidado = false;
+            errors.genres = "Genero es requerido"
+        }
+        if (input.platforms.length === 0) {
+            formularioValidado = false;
+            errors.platforms = "Platsforms es requerido"
+        }
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        dispatch(postVideoGames(input))
-        alert("Personaje Creado")
-        setInput({
-            name: " ",
-            description: " ",
-            rating: " ",
-            released: " ",
-            platforms: [],
-            genres: []
+        if (formularioValidado === true) {
+            setBotonActivo(true)
+        }
 
-        })
-        navigate('/home')
-    }
-
-    function handleDelete(e) {
-        setInput({
-            ...input,
-            // [e.target.name]: input.platforms.filter(el => el !== e)
-            platforms: input.platforms.filter(el => el !== e),
-            genres: input.genres.filter(el => el !== e)
-
-        })
-    }
-
-    function handleSelect(e) {
-        setInput({
-            ...input,
-            [e.target.name]: input[e.target.name].concat(e.target.value)
-        })
-
-        let objError = validate({ ...input, [e.target.name]: e.target.value });
-        setError(objError);
-    }
-
+        return errors;
+    };
 
     return (
+
         <div>
-            <Link to='/home'> <button> VOLVER</button> </Link>
-
+            <Link to='/home'><button> VOLVER</button></Link>
             <h1>Crea tu Video Games</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nombre:</label>
-                    <input type="text"
-                        value={input.name}
-                        name="name"
-                        onChange={handleChange}
-                    />
-                    {error.name && (<p>{error.name} </p>)}
-                </div>
-                <div>
-                    <label>Description:</label>
-                    <input type="text"
-                        value={input.description}
-                        name="description"
-                        maxLength={250}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Rating: </label>
-                    <input type="number"
-                        value={input.rating}
-                        name="rating"
-                        onChange={handleChange}
-                        placeholder="Rating"
-                        min="0"
-                        max="10"
+            <form onSubmit={e => handleSubmit(e)}>
 
-                    />
-                </div>
-                <div>
-                    <label>Released: </label>
-                    <input type="date"
-                        value={input.released}
-                        name="released"
-                        onChange={handleChange}
-                        placeholder="Released"
-                    /> </div>
+                <FormRama handleSelect={handleSelect} handleSelect1={handleSelect1} name={input.name} description={input.description} rating={input.rating}
+                    released={input.released}
+                    genres={input.genres} platforms={input.platforms}
+                    handleDelete={handleDelete} handleDelete1={handleDelete1} handleChange={handleChange}
 
+                    errorName={error.name} errorDescription={error.description} errorRating={error.rating} errorReleased={error.released}
+                    errorGenres={error.genres} errorPlatforms={error.platforms} />
 
-
-                <div>
-
-                    <label>Generos: </label>
-                    <select name='genres' onChange={e => handleSelect(e)}>
-                        {allGenres.map((e, index = 1) => (
-                            <option key={index} value={e.name}> {e.name}</option>
-                        ))}
-                    </select>
-                    <ul>{input.genres.map((ele, index = 1) => <li key={index} >  {ele + "  "}   <button onClick={() => handleDelete(ele)}> x</button> </li>)} </ul>
-                </div>
-                {/* <select onChange={handleSelect} value={input.name} name="genres" >
-                        {allGenres.map(el => (
-                            <option key={el.id} >{el.name} </option>
-
-                        ))}
-                    </select> */}
-
-
-
-                <div>
-                    <label>Platforms: </label>
-                    <select name="platforms" onChange={e => handleSelect(e)}>
-                        {allPlatforms.map((e, index = 1) => (
-                            // <div  key={e.id}>
-                            <option key={index} value={e}>{e} </option>
-                            // </div>
-                        ))}
-                    </select>
-
-                    <ul> {input.platforms.map((e, index = 1) => < li key={index}>  {e + "  "} <button onClick={() => handleDelete(e)}> x</button> </li>)}
-                    </ul>
-
-                </div>
-
-
-                <button type='submit' >  Crear Personaje </button>
+                <button type='submit' disabled={!botonActivo}>  Crear Personaje </button>
 
             </form >
 
-        </div >
+
+
+
+        </div>
     );
 }
-
-;

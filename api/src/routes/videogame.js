@@ -128,8 +128,12 @@ server.get('/', async (req, res) => {
 
 server.post('/', async (req, res) => {
 
-
     let { name, description, rating, released, platforms, createdInBd, genres } = req.body;
+
+    if (name === " " || description === " " || rating === " " || released === " " || platforms === [] || genres === []) {
+        return res.status(404).send("No se enviaron datos")
+    }
+
     let nameChange = name.trim().charAt().toLocaleUpperCase() + name.trim().slice(1,)
 
     const usuario = await Videogame.findAll({
@@ -188,6 +192,11 @@ server.get('/:id', async (req, res) => {
         }
     }
 
+
+
+
+
+
     if (id.length > 7) {
         let infoBd = await getAllVideoGames()
         const idBd = infoBd.filter(e => e.id === id)
@@ -203,6 +212,9 @@ server.get('/:id', async (req, res) => {
             }
             res.status(200).send(objBd)
         }
+
+
+
 
     }
 })
