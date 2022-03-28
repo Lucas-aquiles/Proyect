@@ -1,19 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-
+import './Card.css'
 
 export default function Card({ name, img, genres, id }) {
     return (
-        <div >
-            <Link to={`/details/${id}`}> Ver</Link>
-            <h3>  {name}   </h3>
-            <img src={img} width="200" height="200" alt="" />
-            <h5>{genres} </h5>
+        <div className='conta'   >
+
+            <img className='img' src={img} alt="" />
+
+            <div className='ite'>
+                <Link to={`/details/${id}`}>   <h3 className='name'>{name}</h3> </Link>
+            </div>
 
 
-
-
-
+            <div>
+                <h5 className='h5' >{genres} </h5>
+            </div>
 
         </div>
 

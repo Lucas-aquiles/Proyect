@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { postVideoGames } from '../actions';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,8 @@ export default function Form() {
 
     let [botonActivo, setBotonActivo] = useState(false);
     let [error, setError] = useState('');
-    console.log(error)
+
+
     const [input, setInput] = useState({
         name: " ",
         description: " ",
@@ -21,8 +22,6 @@ export default function Form() {
         platforms: [],
         genres: []
     })
-
-
 
 
 
@@ -76,6 +75,8 @@ export default function Form() {
             genres: []
 
         })
+        let objError = validate({ ...input, [input.genres]: [] });
+        setError(objError);
     }
     function handleDelete1(e) {
         e.preventDefault()
@@ -84,6 +85,8 @@ export default function Form() {
             platforms: []
 
         })
+        let objError = validate({ ...input, [e.target.name]: e.target.value });
+        setError(objError);
     }
 
     function handleChange(e) {
@@ -96,14 +99,15 @@ export default function Form() {
         let objError = validate({ ...input, [e.target.name]: e.target.value });
         setError(objError);
     }
+
     function validate(input) {
         let errors = {};
+        console.log("erross", errors, "errossss")
         let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
         let regexRating = /^[0-9]$/;
         let regexDescription = /^.{1,255}$/;
         let regexFecha = /^(0[1-9]|[1-2]\d|3[01])(\/)(0[1-9]|1[012])\2(\d{4})$/;
         let formularioValidado = true;
-
 
         if (!input.name.trim()) {
             formularioValidado = false;
@@ -138,12 +142,12 @@ export default function Form() {
         }
         if (input.platforms.length === 0) {
             formularioValidado = false;
-            errors.platforms = "Platsforms es requerido"
+            errors.platforms = "Platforms es requerido"
         }
 
-        if (formularioValidado === true) {
-            setBotonActivo(true)
-        }
+        if (Object.keys(errors).length === 0) {
+            setBotonActivo(formularioValidado)
+        } else { setBotonActivo(false) }
 
         return errors;
     };

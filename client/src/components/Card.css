@@ -1,0 +1,35 @@
+.conta {
+  /* border-radius: 10%; */
+  padding: 0.5rem;
+  border: medium solid;
+  border-radius: 2rem;
+  width: 16.5rem;
+  height: 27rem;
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+  /* flex-flow: column; */
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
+  /* me permite centrar los item */
+}
+
+.img {
+  /* border-radius: 10rem; */
+  border-radius: 2rem;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.ite {
+  margin: 0%;
+  font-family: "cursive" "Source Sans Pro", "Arial", sans-serif;
+  font-size: 1.3rem;
+}
+.h5 {
+  margin-top: 0.5rem;
+  text-align: center;
+}

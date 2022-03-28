@@ -107,10 +107,10 @@ function rootReducer(state = initialState, action) {
       };
 
     case 'SEARCH_VIDEO_GAMES':
-
       return {
         ...state,
         videogames: action.payload
+
       };
 
     case 'POST_VIDEOGAMES':

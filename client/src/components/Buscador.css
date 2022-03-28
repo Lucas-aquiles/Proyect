@@ -1,4 +1,7 @@
 .search {
+  width: 100%;
   border-style: solid;
-  background-color: greenyellow;
+  text-align: left;
+  padding-bottom: 1rem;
+  background-color: aquamarine;
 }

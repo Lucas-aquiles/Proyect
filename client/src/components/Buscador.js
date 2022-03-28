@@ -26,26 +26,23 @@ export default function Search() {
 
 
 
-    return (< div className='search'>
+    return (
+        < div className='search'>
 
-        <form >
-            <div>
-                <label >Buscador: </label>
-                <input
-                    value={name}
-                    onChange={(e) => handleInputChange(e)}
-                    type="text"
-                    placeholder='Buscar..'
-                />
-            </div>
-            <button type="submit" onClick={(e) => handleSubmit(e)}   >BUSCAR...</button>
-        </form>
+            <form >
+                <div>
+                    <label >Buscador: </label>
+                    <input
+                        value={name}
+                        onChange={(e) => handleInputChange(e)}
+                        type="text"
+                        placeholder='Buscar..'
+                    />
+                </div>
+                <button type="submit" onClick={(e) => handleSubmit(e)}   >BUSCAR...</button>
+            </form>
 
-        < h1 > Soy un nav </h1 >
-
-
-
-    </div>
+        </div>
     )
 }
 

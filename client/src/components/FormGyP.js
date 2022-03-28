@@ -41,6 +41,7 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
                     value={name}
                     name="name"
                     onChange={handleChange}
+                    placeholder="Nombre"
                 />
             </label>
             {errorName && (<p>{errorName} </p>)}
@@ -52,8 +53,9 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
                     name="description"
                     maxLength={250}
                     onChange={handleChange}
+                    placeholder="Description"
                 /></label>
-            {errorDescription && (<p>{errorDescription} </p>)}
+            {!errorName && errorDescription && (<p>{errorDescription} </p>)}
             <br />
             <label>Rating:
                 <input type="number"
@@ -65,7 +67,7 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
                     min={0}
 
                 /></label>
-            {errorRating && (<p>{errorRating} </p>)}
+            {!errorDescription && errorRating && (<p>{errorRating} </p>)}
 
             <br />
             <label>Released:
@@ -75,20 +77,20 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
                     onChange={handleChange}
                     placeholder="Released = DD/MM/AAAA;" />
             </label>
-            {errorReleased && (<p>{errorReleased} </p>)}
+            {!errorRating && errorReleased && (<p>{errorReleased} </p>)}
 
             <br />
             <label>Generos:
-                <select name='genres' onChange={e => handleSelect(e)} >
+                <select name='genres' onChange={e => handleSelect(e)} defaultValue=""  >
                     <optgroup label="Generos">
                         {allGenres.map((e) => (
-                            <option key={e.id} value={e.name}> {e.name}</option>
+                            <option key={e.id} value={e.name} defaultValue> {e.name}</option>
                         ))}
                     </optgroup>
                 </select> </label>
 
             <button value="genres" onClick={(e) => handleDelete(e)}> x</button>
-            {errorGenres && (<p>{errorGenres} </p>)}
+            {!errorReleased && errorGenres && (<p>{errorGenres} </p>)}
 
             <ul>{genres.map(ele => <li key={contador++}>  {ele}    </li>)} </ul>
 
@@ -107,7 +109,7 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
             </label>
 
             <button value="platforms" onClick={(e) => handleDelete1(e)}> x</button>
-            {errorPlatforms && (<p>{errorPlatforms} </p>)}
+            {!errorGenres && errorPlatforms && (<p>{errorPlatforms} </p>)}
 
 
             <ul> {platforms.map((e) => <li key={tercera++}>  {e}    </li>)}</ul>

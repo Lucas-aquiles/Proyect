@@ -75,6 +75,7 @@ export function searchVideoGames(name) {
             .catch((error) => {
                 throw new Error(error)
             })
+
     };
 }
 

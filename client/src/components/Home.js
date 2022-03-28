@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import './Home.css'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getVideoGames, filterOrigin, orderByName, orderByRating, getGenres, orderByGenres } from '../actions';
@@ -79,13 +79,17 @@ export default function Home() {
     return (
 
 
-        <div>
+        <div className="cuerpo">
 
-            <Search />
-            <button onClick={e => handleReseteo(e)} >Cargar los Videogames</button>
-            <div>
-                <Link to="/create"> Crear videogames</Link>
-                <div>
+
+
+            <div className='container' > <Search />  </div>
+            <div className='container'>
+
+                <div className='item' >  <button onClick={e => handleReseteo(e)} >Cargar los Videogames</button>               </div>
+                <div className='item'>  <Link to="/create"> Crear videogames</Link>  </div>
+
+                <div className='item'>
                     <select onChange={handleOrder} >
                         <option value="orden"> Ordenar por: </option>
                         <option value="az" > A - Z </option>
@@ -94,13 +98,16 @@ export default function Home() {
                         <option value="pr" > Peores rating</option>
                     </select>
                 </div>
-                <select onChange={handleFilterCreated}>
-                    <option value="vgs">  Videogames </option>
-                    <option value="all" > TODOS </option>
-                    <option value="api" > EXISTENTES </option>
-                    <option value="created">  Creados x Usuario </option>
-                </select>
-                <div>
+                <div className='item'>
+                    <select onChange={handleFilterCreated}>
+                        <option value="vgs">  Videogames </option>
+                        <option value="all" > TODOS </option>
+                        <option value="api" > EXISTENTES </option>
+                        <option value="created">  Creados x Usuario </option>
+                    </select>
+                </div>
+
+                <div className='item'>
 
                     <select onChange={e => handleOrderGenres(e)}>
                         <option value="gen"> Genero </option>
@@ -111,15 +118,24 @@ export default function Home() {
                     </select>
                 </div>
             </div>
-            <div className=" box grid-responsive">
-                <Paginado videogamePerPage={videogamePerPage}
-                    allVideoGames={allVideoGames.length}
-                    paginado={paginado}
-                /> </div>
+
+            <div className="container1">
+                <div className="item2">
+                    <Paginado videogamePerPage={videogamePerPage}
+                        allVideoGames={allVideoGames.length}
+                        paginado={paginado}
+                    />   </div> </div>
+
+
             {/* 0 - 15  // 15-30 // 30/45   */}
             <article className=" box grid-responsive">
                 {currentVideoGames.map(e => <Card key={e.id} name={e.name} img={e.img ? e.img : imge} genres={e.genres} id={e.id} />)}
             </article>
+            <div className=" pag   box grid-responsive">
+                <Paginado videogamePerPage={videogamePerPage}
+                    allVideoGames={allVideoGames.length}
+                    paginado={paginado}
+                /> </div>
         </div>
     );
 }
