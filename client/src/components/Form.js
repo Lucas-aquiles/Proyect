@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { postVideoGames } from '../actions';
 import { useDispatch } from 'react-redux';
 import FormRama from './FormGyP';
-
+import "./Form.css"
 
 export default function Form() {
 
@@ -153,25 +153,35 @@ export default function Form() {
     };
 
     return (
-
         <div>
-            <Link to='/home'><button> VOLVER</button></Link>
-            <h1>Crea tu Video Games</h1>
-            <form onSubmit={e => handleSubmit(e)}>
-
-                <FormRama handleSelect={handleSelect} handleSelect1={handleSelect1} name={input.name} description={input.description} rating={input.rating}
-                    released={input.released}
-                    genres={input.genres} platforms={input.platforms}
-                    handleDelete={handleDelete} handleDelete1={handleDelete1} handleChange={handleChange}
-
-                    errorName={error.name} errorDescription={error.description} errorRating={error.rating} errorReleased={error.released}
-                    errorGenres={error.genres} errorPlatforms={error.platforms} />
-
-                <button type='submit' disabled={!botonActivo}>  Crear Personaje </button>
-
-            </form >
+            <div className='esp'>
+                <h3>Crea tu Video Games</h3>
+            </div>
+            <div className='containerformulario'>
 
 
+                <div className='item5'>
+                    <form onSubmit={e => handleSubmit(e)}>
+
+                        <FormRama handleSelect={handleSelect} handleSelect1={handleSelect1} name={input.name} description={input.description} rating={input.rating}
+                            released={input.released}
+                            genres={input.genres} platforms={input.platforms}
+                            handleDelete={handleDelete} handleDelete1={handleDelete1} handleChange={handleChange}
+
+                            errorName={error.name} errorDescription={error.description} errorRating={error.rating} errorReleased={error.released}
+                            errorGenres={error.genres} errorPlatforms={error.platforms} />
+                        <div className='item4'>
+                            <button className='bot' type='submit' disabled={!botonActivo}>  Crear Personaje </button>
+                        </div>
+
+                    </form >
+                </div>
+
+                <div className='item5'>
+                    <Link to='/home'><button className='butonn'> Atras</button></Link>
+
+                </div>
+            </div>
 
 
         </div>

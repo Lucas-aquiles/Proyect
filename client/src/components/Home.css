@@ -1,8 +1,9 @@
 .item {
-  background-color: yellowgreen;
-  height: 1.5rem;
+  background-color: orange;
+  height: 1.9rem;
   border: solid;
   border-radius: 0.5rem;
+  border-color: yellow;
   flex-grow: 1;
 }
 .pag {
@@ -12,6 +13,12 @@
   margin-top: 0.2rem;
 }
 .container {
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 8%,
+    rgba(68, 209, 65, 0.711922268907563) 53%
+  );
+
   height: 3rem;
   margin-top: 0rem;
   background-color: #282c34;
@@ -29,13 +36,45 @@
 }
 .container1 {
   display: flex;
-  background-color: orange;
+  background: radial-gradient(
+    circle,
+    rgba(58, 120, 180, 1) 0%,
+    rgba(96, 187, 52, 1) 47%,
+    rgba(252, 216, 69, 1) 100%
+  );
   text-align: center;
   flex-direction: column;
   border-bottom-right-radius: 100%;
   border-bottom-left-radius: 100%;
+  border-color: orange;
 }
 
 .item2 {
   height: 5.5rem;
+}
+
+.bth {
+  padding-top: 0.4rem;
+  border: transparent;
+  background-color: orange;
+  font-size: 1rem;
+  font-weight: lighter;
+}
+
+.slh {
+  color: black;
+  border: transparent;
+  width: 100%;
+}
+
+@media (min-width: 500px) {
+  .car {
+    padding-left: 6rem;
+  }
+}
+
+@media (max-width: 300px) {
+  .container {
+    flex-direction: column;
+  }
 }

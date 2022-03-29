@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { getGenres, getPlatforms } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
-
+import "./FormGyP.css"
 
 
 export default function FormRama({ handleChange, handleSelect1, handleSelect, genres, platforms,
@@ -34,9 +34,9 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
     var sumador = 1
     var tercera = 1
     return (
-        <div>
+        <div className='containerform'>
 
-            <label>Nombre:
+            <label className='itemform'>Nombre:
                 <input type="text"
                     value={name}
                     name="name"
@@ -47,7 +47,7 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
             {errorName && (<p>{errorName} </p>)}
             <br />
 
-            <label>Description:
+            <label className='itemform'>Description:
                 <textarea type="text"
                     value={description}
                     name="description"
@@ -57,12 +57,12 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
                 /></label>
             {!errorName && errorDescription && (<p>{errorDescription} </p>)}
             <br />
-            <label>Rating:
+            <label className='itemform'>Rating:
                 <input type="number"
                     value={rating}
                     name="rating"
                     onChange={handleChange}
-                    placeholder="Rating"
+                    // placeholder="Rating"
                     max={10}
                     min={0}
 
@@ -70,7 +70,7 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
             {!errorDescription && errorRating && (<p>{errorRating} </p>)}
 
             <br />
-            <label>Released:
+            <label className='itemform'>Released:
                 <input type="text"
                     value={released}
                     name="released"
@@ -80,7 +80,7 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
             {!errorRating && errorReleased && (<p>{errorReleased} </p>)}
 
             <br />
-            <label>Generos:
+            <label className='itemform'>Generos:
                 <select name='genres' onChange={e => handleSelect(e)} defaultValue=""  >
                     <optgroup label="Generos">
                         {allGenres.map((e) => (
@@ -95,7 +95,7 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
             <ul>{genres.map(ele => <li key={contador++}>  {ele}    </li>)} </ul>
 
             <br />
-            <label>Platforms:
+            <label className='itemform'>Platforms:
                 <select name="platforms" onChange={(e) => handleSelect1(e)}>
                     <optgroup label="Plataformas">
                         {allPlatforms.map((element) => (

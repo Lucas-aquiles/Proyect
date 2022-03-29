@@ -1,0 +1,82 @@
+.containerformulario {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* .item5 {
+  border: solid;
+} */
+.esp {
+  padding-left: 13rem;
+}
+h3 {
+  padding-left: 9rem;
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 1;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.bot {
+  border: thin solid #444;
+  padding-left: 1rem;
+  border-radius: 0.25rem;
+  width: 100%;
+  height: 2rem;
+  display: inline;
+  background-color: #eee;
+  color: rgb(250, 239, 239);
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: none;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background: gray;
+}
+
+.butonn {
+  width: 11rem;
+  height: 11rem;
+  font-size: 2rem;
+  border-radius: 6rem;
+  border-color: green;
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 187, 45, 1) 100%
+  );
+  cursor: pointer;
+}
+.butonn:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(4, 35, 6, 0.7903536414565826) 3%,
+    rgba(2, 0, 36, 1) 4%,
+    rgba(2, 0, 36, 1) 10%,
+    rgba(9, 121, 33, 1) 42%,
+    rgba(4, 174, 163, 1) 86%,
+    rgba(2, 191, 205, 1) 88%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  color: white;
+}
+
+.item4 {
+  padding-left: 1rem;
+}
+
+form {
+  padding-bottom: 1rem;
+}
+
+.bot:hover {
+  background: black;
+  color: white;
+}

@@ -7,7 +7,6 @@ const {
 } = process.env;
 const { gamesNameAll, gamesAll, getDbInfo, getAllVideoGames } = require("./function");
 
-
 const { Videogame, Genders, Intermedio } = require('../db');
 
 

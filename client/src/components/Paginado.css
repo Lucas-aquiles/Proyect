@@ -5,7 +5,12 @@
 .boton {
   height: 2rem;
   width: 2rem;
-  background-color: #4caf50;
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(233, 200, 213, 1) 3%,
+    rgba(140, 231, 113, 1) 100%
+  );
   border-radius: 0.5rem;
   border: thin solid;
   border-color: black;
@@ -17,6 +22,16 @@
   cursor: pointer;
 }
 .boton:hover {
-  background-color: red; /* Green */
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(4, 35, 6, 0.7903536414565826) 3%,
+    rgba(2, 0, 36, 1) 4%,
+    rgba(2, 0, 36, 1) 10%,
+    rgba(9, 121, 33, 1) 42%,
+    rgba(4, 174, 163, 1) 86%,
+    rgba(2, 191, 205, 1) 88%,
+    rgba(0, 212, 255, 1) 100%
+  );
   color: white;
 }

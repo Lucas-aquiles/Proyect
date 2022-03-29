@@ -3,6 +3,7 @@ import { detailsId } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import "./Detail.css"
 
 export default function Details() {
     const dispatch = useDispatch();
@@ -17,17 +18,34 @@ export default function Details() {
     const dVG = useSelector((state) => state.details);
 
     return (
-        <div>
-            <h2> {dVG.name} </h2>
-            <img src={dVG.img ? dVG.img : imge} width="600px" height="500px" alt="imagen de video games" />
-            <h5> {dVG.description} </h5>
-            <h3> Fecha de lanzamiento : {dVG.released} </h3>
-            <h3> Rating : {dVG.rating} </h3>
-            <h3>Generos : {dVG.genres}</h3>
-            <h3>Plataformas : {dVG.platforms}</h3>
-            <Link to="/home">
-                <button> VOLVER</button>
-            </Link>
+        <div >
+            <div className="c-details" >
+                <div className="iitem1">
+                    <h2> {dVG.name} </h2>
+                </div>
+                <div className="img-detail">
+                    <img className="img-detail1" src={dVG.img ? dVG.img : imge} alt="imagen de video games" />
+                </div>
+                <div className="iitem3">
+                    <h3 >Fecha de lanzamiento <br />{dVG.released} </h3>
+                    <h3 > Rating  <br />{dVG.rating} </h3>
+                    <h3 >Generos<br /> {dVG.genres}</h3>
+                    <h3 className="nto1">Plataformas <br />{dVG.platforms}</h3>
+
+                </div>
+
+            </div>
+
+
+            <div className="c-details1">
+                <h5 className="description"> {dVG.description} </h5>
+                <Link to="/home">
+                    <button className="bottom"> VOLVER</button>
+                </Link>
+
+            </div>
+
+
         </div>
     );
 }

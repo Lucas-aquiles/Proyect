@@ -1,7 +1,19 @@
 .search {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+
+  margin-top: 2rem;
   width: 100%;
-  border-style: solid;
-  text-align: left;
-  padding-bottom: 1rem;
-  background-color: aquamarine;
+}
+
+.hij1 {
+  padding: 0.5rem;
+  border: transparent;
+}
+
+.btsearch {
+  height: 2.75rem;
+  border-radius: 0.6rem;
+  color: orange;
 }

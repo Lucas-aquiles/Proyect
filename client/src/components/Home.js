@@ -9,7 +9,6 @@ import Search from './Buscador.js';
 import Paginado from './Paginado'
 
 export default function Home() {
-
     var imge = "https://img.freepik.com/vector-gratis/consola-juegos-letras-letrero-neon-fondo-ladrillo_1262-11854.jpg?size=338&ext=jpg";
     const dispatch = useDispatch()
     const allVideoGames = useSelector((state) => state.videogames)
@@ -86,11 +85,12 @@ export default function Home() {
             <div className='container' > <Search />  </div>
             <div className='container'>
 
-                <div className='item' >  <button onClick={e => handleReseteo(e)} >Cargar los Videogames</button>               </div>
-                <div className='item'>  <Link to="/create"> Crear videogames</Link>  </div>
+                <div className='item' >  <button className='bth' onClick={e => handleReseteo(e)} > Cargar los Videogames</button> </div>
+                <div className='item'>  <button className='bth'> <Link to="/create"> Crear Videogames</Link>
+                </button>   </div>
 
                 <div className='item'>
-                    <select onChange={handleOrder} >
+                    <select className='slh' onChange={handleOrder} >
                         <option value="orden"> Ordenar por: </option>
                         <option value="az" > A - Z </option>
                         <option value="za"> Z - A </option>
@@ -99,17 +99,17 @@ export default function Home() {
                     </select>
                 </div>
                 <div className='item'>
-                    <select onChange={handleFilterCreated}>
+                    <select className='slh' onChange={handleFilterCreated}>
                         <option value="vgs">  Videogames </option>
-                        <option value="all" > TODOS </option>
-                        <option value="api" > EXISTENTES </option>
+                        <option value="all" > Todos </option>
+                        <option value="api" > Existentes </option>
                         <option value="created">  Creados x Usuario </option>
                     </select>
                 </div>
 
                 <div className='item'>
 
-                    <select onChange={e => handleOrderGenres(e)}>
+                    <select className='slh' onChange={e => handleOrderGenres(e)}>
                         <option value="gen"> Genero </option>
 
                         {allGenres.map((e) => (
@@ -128,7 +128,7 @@ export default function Home() {
 
 
             {/* 0 - 15  // 15-30 // 30/45   */}
-            <article className=" box grid-responsive">
+            <article className=" car box grid-responsive">
                 {currentVideoGames.map(e => <Card key={e.id} name={e.name} img={e.img ? e.img : imge} genres={e.genres} id={e.id} />)}
             </article>
             <div className=" pag   box grid-responsive">
@@ -139,4 +139,5 @@ export default function Home() {
         </div>
     );
 }
+
 

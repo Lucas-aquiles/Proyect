@@ -5,6 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(
+    90deg,
+    rgba(58, 120, 180, 1) 0%,
+    rgba(96, 187, 52, 1) 47%,
+    rgba(252, 216, 69, 1) 100%
+  );
 }
 
 code {
@@ -16,10 +22,22 @@ code {
   margin: 2rem;
   margin-left: auto;
   box-shadow: 0 0 5rem #00000025 inset;
+  background: linear-gradient(
+    90deg,
+    rgba(58, 120, 180, 1) 0%,
+    rgba(96, 187, 52, 1) 47%,
+    rgba(252, 216, 69, 1) 100%
+  );
 }
 
 .grid-responsive {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
+  background: linear-gradient(
+    90deg,
+    rgba(58, 120, 180, 1) 0%,
+    rgba(96, 187, 52, 1) 47%,
+    rgba(252, 216, 69, 1) 100%
+  );
 }
