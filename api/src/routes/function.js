@@ -49,7 +49,6 @@ const gamesNameAll = async (name) => {
 //     return Promise.all(pagApi).then(r => r)
 // };
 
-
 const gamesAll = async () => {
     try {
         let pagApi = [];
@@ -69,6 +68,7 @@ const gamesAll = async () => {
             });
             pagApi = pagApi.concat(apiData)
         }
+
 
         return pagApi
 
