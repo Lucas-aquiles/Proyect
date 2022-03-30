@@ -123,9 +123,21 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: action.payload
       };
+    case "CLEAR_ID":
+      return {
+        ...state,
+        details: action.payload
+      };
+
+
+
     default:
       return { ...state };
   }
+
+
+
+
 
 
   // if (action.type === "GET_VIDEO_GAMES") {

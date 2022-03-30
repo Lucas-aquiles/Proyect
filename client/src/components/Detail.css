@@ -1,8 +1,11 @@
 .c-details {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
   border: solid orange;
+}
+.principal {
+  width: 100%;
+  height: 100%;
 }
 
 .nto {
@@ -20,7 +23,7 @@
 }
 
 .img-detail {
-  width: 150rem;
+  width: 130rem;
   height: 39.8rem;
 }
 .img-detail1 {

@@ -23,6 +23,13 @@ export default function Form() {
         genres: []
     })
 
+    useEffect(() => {
+        setError(validate(input))
+
+    }, [input])
+
+
+
 
 
     function handleSubmit(e) {
@@ -113,14 +120,15 @@ export default function Form() {
             formularioValidado = false;
             errors.name = 'Nombre es requerido';
         } else if (!regexName.test(input.name.trim())) {
-            errors.name = "El campo nombre solo acepta letras y espacios en blanco";
+            formularioValidado = false;
+            errors.name = "solo acepta letras y espacios en blanco";
         }
         if (!input.description.trim()) {
             formularioValidado = false;
             errors.description = "Descripcion es requerido"
         } else if (!regexDescription.test(input.description.trim())) {
             formularioValidado = false;
-            errors.description = "El campo comentarios no debe exceder los 255 caracteres";
+            errors.description = "no debe exceder los 255 caracteres";
         }
         if (!input.rating.trim()) {
             formularioValidado = false;
@@ -133,7 +141,8 @@ export default function Form() {
             formularioValidado = false;
             errors.released = "Released es requerido"
         } else if (!regexFecha.test(input.released.trim())) {
-            errors.released = "Released es requerido , formato = 28/02/2021, solo acepta numeros"
+            formularioValidado = false;
+            errors.released = " formato = 28/02/2021"
         }
 
         if (input.genres.length === 0) {

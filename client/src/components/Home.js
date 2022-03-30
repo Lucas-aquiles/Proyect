@@ -7,12 +7,20 @@ import { getVideoGames, filterOrigin, orderByName, orderByRating, getGenres, ord
 import Card from './Card.js';
 import Search from './Buscador.js';
 import Paginado from './Paginado'
+import ImgPrueba from './ImgPrueba';
+import Loader from './Loader';
+import Scroll from './ScrollToTop';
+
 
 export default function Home() {
     var imge = "https://img.freepik.com/vector-gratis/consola-juegos-letras-letrero-neon-fondo-ladrillo_1262-11854.jpg?size=338&ext=jpg";
     const dispatch = useDispatch()
     const allVideoGames = useSelector((state) => state.videogames)
     const allGenres = useSelector((state) => state.genres)
+
+    // const [loading, setLoading] = useState(false)
+
+
     const [orden, setOrden] = useState('');
     const [currentPage, setCurrentPage] = useState(1);                                           // 1      // 2
     const [videogamePerPage, setVideogamePerPage] = useState(15)                                 // 15 //  15
@@ -32,23 +40,25 @@ export default function Home() {
 
 
     useEffect(() => {
-        dispatch(getVideoGames())
+        dispatch(getVideoGames());
+
+
     }, []) //  eslint-disable-line react-hooks/exhaustive-deps
 
     function handleFilterCreated(e) {
-        e.preventDefault();
+        // e.preventDefault();
         dispatch(filterOrigin(e.target.value))
 
     }
     function handleOrder(e) {
         if (e.target.value === "az" || e.target.value === "za") {
-            e.preventDefault();
+            // e.preventDefault();
             dispatch(orderByName(e.target.value));
             setCurrentPage(1);
             setOrden(`Ordenado ${e.target.value}`)
         }
         if (e.target.value === "mr" || e.target.value === "pr") {
-            e.preventDefault();
+            // e.preventDefault();
             dispatch(orderByRating(e.target.value));
             setCurrentPage(1);
             setOrden(`Ordenado ${e.target.value}`)
@@ -70,16 +80,16 @@ export default function Home() {
     function handleReseteo(e) {
         e.preventDefault();
         dispatch(getVideoGames())
-        setOrden("Todos los VG")
+        setCurrentPage("1")
+        // setLoading(false)
+        setOrden("Todos los VG");
 
     }
 
 
     return (
 
-
         <div className="cuerpo">
-
 
 
             <div className='container' > <Search />  </div>
@@ -91,7 +101,7 @@ export default function Home() {
 
                 <div className='item'>
                     <select className='slh' onChange={handleOrder} >
-                        <option value="orden"> Ordenar por: </option>
+                        <option selected> Ordenar por: </option>
                         <option value="az" > A - Z </option>
                         <option value="za"> Z - A </option>
                         <option value="mr" > Mejores rating</option>
@@ -100,7 +110,7 @@ export default function Home() {
                 </div>
                 <div className='item'>
                     <select className='slh' onChange={handleFilterCreated}>
-                        <option value="vgs">  Videogames </option>
+                        <option selected>  Videogames </option>
                         <option value="all" > Todos </option>
                         <option value="api" > Existentes </option>
                         <option value="created">  Creados x Usuario </option>
@@ -110,7 +120,7 @@ export default function Home() {
                 <div className='item'>
 
                     <select className='slh' onChange={e => handleOrderGenres(e)}>
-                        <option value="gen"> Genero </option>
+                        <option selected value="gen"> Genero </option>
 
                         {allGenres.map((e) => (
                             <option key={e.id} value={e.name}> {e.name}</option>
@@ -129,13 +139,17 @@ export default function Home() {
 
             {/* 0 - 15  // 15-30 // 30/45   */}
             <article className=" car box grid-responsive">
-                {currentVideoGames.map(e => <Card key={e.id} name={e.name} img={e.img ? e.img : imge} genres={e.genres} id={e.id} />)}
+                {/* {loading && <Loader />} */}
+
+                {currentVideoGames.length === 0 ? <ImgPrueba /> : currentVideoGames.map(e => <Card key={e.id} name={e.name} img={e.img ? e.img : imge} genres={e.genres} id={e.id} />)}
             </article>
             <div className=" pag   box grid-responsive">
                 <Paginado videogamePerPage={videogamePerPage}
                     allVideoGames={allVideoGames.length}
                     paginado={paginado}
-                /> </div>
+                />        </div>
+            <div className='container'> <Scroll showBelow={250} />  </div>
+
         </div>
     );
 }

@@ -54,6 +54,7 @@
 }
 
 .bth {
+  width: 100%;
   padding-top: 0.4rem;
   border: transparent;
   background-color: orange;
@@ -77,4 +78,13 @@
   .container {
     flex-direction: column;
   }
+}
+
+.item:hover {
+  background: sandybrown;
+  color: black;
+}
+.bth:hover {
+  background: sandybrown;
+  color: black;
 }

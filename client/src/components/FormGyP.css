@@ -1,5 +1,5 @@
 .containerform {
-  padding-left: 2rem;
+  padding-left: 1rem;
   /* display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -27,7 +27,7 @@ textarea {
   margin-bottom: 1rem;
   outline: none;
   display: block;
-  width: 90%;
+  width: 80%;
   font-size: 1rem;
   line-height: 1;
   background-color: white;

@@ -117,6 +117,16 @@ export function getPlatforms() {
     }
 }
 
+export function clearId() {
+    return {
+        type: 'CLEAR_ID',
+        payload: []
+    }
+}
+
+
+
+
 export function detailsId(id) {
     return async function (dispatch) {
         try {

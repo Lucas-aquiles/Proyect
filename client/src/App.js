@@ -16,6 +16,7 @@ function App() {
       <Route path='/create' element={<Form />} />
       <Route path='details/:id' element={<Details />} />
 
+
     </Routes>
   );
 }
