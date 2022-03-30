@@ -8,7 +8,6 @@ const {
 const { Videogame, Genders, Intermedio } = require('../db');
 
 
-
 const gamesNameAll = async (name) => {
     var ruta = API_KEY
     var url = `https://api.rawg.io/api/games?search=${name}}&key=${ruta}`
@@ -48,6 +47,7 @@ const gamesNameAll = async (name) => {
 
 //     return Promise.all(pagApi).then(r => r)
 // };
+
 
 const gamesAll = async () => {
     try {
