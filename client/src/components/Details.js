@@ -1,9 +1,9 @@
 import React from "react";
 
-import { detailsId, clearId } from "../actions";
+import { detailsId, clearId, } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./Detail.css";
 import Loader from "./Loader";
 
@@ -16,6 +16,9 @@ export default function Details() {
 
     useEffect(() => {
         dispatch(detailsId(addres));
+
+        // dispatch(clearComponente())
+
         return () => {
             dispatch(clearId());
         };

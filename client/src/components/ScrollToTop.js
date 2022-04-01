@@ -31,7 +31,7 @@ export default function Scroll(showBelow) {
     return (
         <div>
 
-            <button onClick={handleClick}>  <img width="20px" height="20px" src={manito} /> </button>
+            <button onClick={handleClick}>  <img width="20px" height="20px" src={manito} alt="manito" /> </button>
 
         </div>
 

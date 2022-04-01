@@ -1,9 +1,10 @@
 const initialState = {
   videogames: [],
-  allVideoGames: [],
+  // allVideoGames: [],
   genres: [],
   platforms: [],
-  details: []
+  details: [],
+  ver: []
 }
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -11,20 +12,39 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         videogames: action.payload,
-        allVideoGames: action.payload
+        // allVideoGames: action.payload
 
       };
-    case "FILTER_ORIGIN":
-      const allVideoGames2 = state.allVideoGames
 
-      const statusFiltrado = action.payload === "created" ? allVideoGames2.filter(el => el.createdInBd) :
-        allVideoGames2.filter(el => !el.createdInBd)
+
+
+
+
+    case "FILTER_ORIGIN":
+      const allVideoGames2 = state.videogames
+
+      const statusFiltrado = action.payload === "api" ? allVideoGames2.filter(el => !el.createdInBd) :
+        allVideoGames2
 
       return {
 
         ...state,
-        videogames: action.payload === "all" ? allVideoGames2 : statusFiltrado
+        videogames: statusFiltrado
       };
+
+
+
+    case 'FILTER_ORIGIN_CREATE':
+      const error = [{ genres: 'No encontrado', id: "3d22" }]
+      const allVg = state.videogames.filter(el => el.createdInBd)
+      // const result = !allVg ? allVg.push("error") : allVg.filter(el => el.createdInBd);
+
+
+      return {
+        ...state,
+        videogames: allVg.length === 0 ? error : allVg
+      };
+
     case "ORDER_NAME":
       let sortedArr = action.payload === "az" ?
 
@@ -94,15 +114,14 @@ function rootReducer(state = initialState, action) {
 
     case 'ORDER_BY_GENRES':
 
-
-      const allVideoGame = state.allVideoGames
-
-      const genresFiltrado = allVideoGame.filter(el => el.genres.includes(action.payload))
+      const notdata = [{ genres: ['No encontrado'], id: "2d2" }]
+      const VideoGame = state.videogames
+      const genresFiltrado = VideoGame.filter(el => el.genres.includes(action.payload))
 
       return {
 
         ...state,
-        videogames: genresFiltrado
+        videogames: genresFiltrado.length === 0 ? notdata : genresFiltrado
 
       };
 
@@ -128,6 +147,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: action.payload
       };
+    case "CLEAR_COMPONENT":
+      return {
+        ...state,
+        videogames: action.payload
+      };
+
 
 
 
@@ -135,17 +160,6 @@ function rootReducer(state = initialState, action) {
       return { ...state };
   }
 
-
-
-
-
-
-  // if (action.type === "GET_VIDEO_GAMES") {
-  //   return {
-  //     ...state,
-  //     videogames: action.payload
-  //   }
-  // }
 
 
 }

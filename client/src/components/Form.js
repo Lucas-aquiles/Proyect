@@ -23,6 +23,8 @@ export default function Form() {
         genres: []
     })
 
+
+
     useEffect(() => {
         setError(validate(input))
 
@@ -54,21 +56,28 @@ export default function Form() {
 
 
     function handleSelect(e) {
-        e.preventDefault();
-        setInput({
-            ...input,
-            [e.target.name]: input[e.target.name].concat(e.target.value)
-        })
+        // e.preventDefault();
+
+        if (!input.genres.includes(e.target.value)) {
+            setInput({
+                ...input,
+
+                [e.target.name]: input[e.target.name].concat(e.target.value)
+            })
+        }
         let objError = validate({ ...input, [e.target.name]: e.target.value });
         setError(objError);
     }
 
     function handleSelect1(e) {
         e.preventDefault();
-        setInput({
-            ...input,
-            [e.target.name]: input[e.target.name].concat(e.target.value)
-        })
+        if (!input.platforms.includes(e.target.value)) {
+
+            setInput({
+                ...input,
+                [e.target.name]: input[e.target.name].concat(e.target.value)
+            })
+        }
         let objError = validate({ ...input, [e.target.name]: e.target.value });
         setError(objError);
     }
@@ -109,7 +118,6 @@ export default function Form() {
 
     function validate(input) {
         let errors = {};
-        console.log("erross", errors, "errossss")
         let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
         let regexRating = /^[0-9]$/;
         let regexDescription = /^.{1,255}$/;
@@ -161,6 +169,7 @@ export default function Form() {
         return errors;
     };
 
+
     return (
         <div>
             <div className='esp'>
@@ -180,7 +189,7 @@ export default function Form() {
                             errorName={error.name} errorDescription={error.description} errorRating={error.rating} errorReleased={error.released}
                             errorGenres={error.genres} errorPlatforms={error.platforms} />
                         <div className='item4'>
-                            <button className='bot' type='submit' disabled={!botonActivo}>  Crear Personaje </button>
+                            <button className='bot' type='submit' disabled={!botonActivo}>  Crear Video Games </button>
                         </div>
 
                     </form >

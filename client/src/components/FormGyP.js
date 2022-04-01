@@ -11,13 +11,10 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
     errorDescription, errorRating, errorReleased, errorGenres, errorPlatforms
 }) {
 
-
     const dispatch = useDispatch()
+
     const allGenres = useSelector((state) => state.genres);
     const allPlatforms = useSelector((state) => state.platforms);
-
-
-
 
     useEffect(() => {
         dispatch(getGenres());
@@ -83,9 +80,13 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
             <label className='itemform'>Generos:
                 <select name='genres' onChange={e => handleSelect(e)} defaultValue=""  >
                     <optgroup label="Generos">
+
                         {allGenres.map((e) => (
                             <option key={e.id} value={e.name} defaultValue> {e.name}</option>
                         ))}
+
+
+
                     </optgroup>
                 </select> </label>
 
@@ -98,11 +99,13 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
             <label className='itemform'>Platforms:
                 <select name="platforms" onChange={(e) => handleSelect1(e)}>
                     <optgroup label="Plataformas">
+
                         {allPlatforms.map((element) => (
                             // <div  key={e.id}>
                             <option key={sumador++} value={element}> {element} </option>
                             // </div>
                         ))}
+
                     </optgroup>
 
                 </select>
