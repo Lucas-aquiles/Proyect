@@ -9,15 +9,11 @@ const { gamesNameAll, gamesAll, getDbInfo, getAllVideoGames } = require("./funct
 
 const { Videogame, Genders, Intermedio } = require('../db');
 
-
-
-
 server.get('/plat', async (req, res) => {
 
     try {
         const getPlatfo = await gamesAll();
         const mapeo = getPlatfo.map((e) => e.platforms).join("  ")
-        // const replac = mapeo.map((e) => e.replaceAll(",", ""))
         const casi = mapeo.replaceAll(",", " ").split("  ")
         let newe = []
         for (let i = 0; casi.length > i; i++) {
@@ -37,11 +33,7 @@ server.get('/plat', async (req, res) => {
 
 })
 
-
 server.get('/', async (req, res) => {
-
-
-
 
     const name = req.query.name
     let videogames = await getAllVideoGames()
@@ -50,9 +42,7 @@ server.get('/', async (req, res) => {
             let videogameBd = await getDbInfo(); // me trae los juegos de bd 
 
             let videoNameBd = videogameBd.filter(el => el.name.toLowerCase().includes(name.toLowerCase()));
-            if (videoNameBd.length) { return res.status(200).send(videoNameBd) };
-
-
+            if (videoNameBd.length === 1) { return res.status(200).send(videoNameBd) };
 
             let total = await gamesNameAll(name);// me trae los juegos de api
             if (total) { res.status(200).send(total) } else {
@@ -62,13 +52,9 @@ server.get('/', async (req, res) => {
 
 
     } catch (error) {
-        res.status(404).send("no se encontro")
+        res.status(404).send("error")
 
     }
-
-
-
-
 });
 
 
@@ -85,6 +71,7 @@ server.post('/', async (req, res) => {
             where: { name: nameChange }
         })
 
+        // responder al usuario 
 
         if (usuario.length === 0) {
             let gameCreat = await Videogame.create({
@@ -104,8 +91,12 @@ server.post('/', async (req, res) => {
 
             await gameCreat.addGenders(generoDb)
             res.status(200).send("Creado con exito");
+            //mla practica , cambiar el status
+
 
         } else { res.status(200).send("Otro video games tiene ese nombre") }
+        // cambiar el status a estado error 
+        // no entra el en cathc
 
 
     } catch (error) {
@@ -160,37 +151,11 @@ server.get('/:id', async (req, res) => {
                 }
                 res.status(200).send(objBd)
             }
-
         }
     } catch (error) {
         console.error(error);
 
     }
-
-
-
-
 })
-
-
-// https://api.rawg.io/api/games?key=9f6776564ff3496c9da52ae39b57a613
-
-
-// server.get("/", (req, res, next) => {
-
-//     const games_api = axios.get(ruta)
-
-//     const genre_db = Videogame.findAll()
-//     Promise.all([games_api, genre_db])
-//         .then(r => {
-//             let [games_api_r, genre_db_r] = r
-//             return res.send(
-//                 genre_db_r.concat(games_api_r.data.results)
-//             )
-//                 .catch(err => next(err))
-//         })
-// });
-
-
 
 module.exports = server;

@@ -44,6 +44,10 @@ module.exports = (sequelize) => {
     { timestamps: false });
 };
 
+
+
+
+
 // ID: * No puede ser un ID de un videojuego ya existente en la API rawg
 // Nombre *
 // Descripción *

@@ -7,8 +7,7 @@ const {
 const axios = require('axios');
 const server = require("express").Router();
 
-const { Videogame, Genders, Intermedio } = require('../db');
-
+const { Genders } = require('../db');
 
 
 
@@ -24,6 +23,7 @@ server.get('/', async (req, res) => {
             }
         });
 
+
         apiDat.forEach(el => {
             Genders.findOrCreate({
                 where: { name: el.name }
@@ -31,7 +31,6 @@ server.get('/', async (req, res) => {
         })
         const allGenders = await Genders.findAll();
         res.status(200).json(allGenders);
-
 
     } catch (error) {
         res.status(400).send("error");
