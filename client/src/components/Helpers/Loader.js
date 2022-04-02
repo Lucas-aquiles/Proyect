@@ -1,6 +1,5 @@
 import React from 'react';
 import './Loader.css'
-import ImgPrueba from './ImgPrueba';
 // import { useState } from 'react';
 
 

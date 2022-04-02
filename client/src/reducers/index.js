@@ -4,7 +4,7 @@ const initialState = {
   genres: [],
   platforms: [],
   details: [],
-  ver: []
+  see: []
 }
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -15,10 +15,6 @@ function rootReducer(state = initialState, action) {
         // allVideoGames: action.payload
 
       };
-
-
-
-
 
     case "FILTER_ORIGIN":
       const allVideoGames2 = state.videogames
@@ -126,9 +122,13 @@ function rootReducer(state = initialState, action) {
       };
 
     case 'SEARCH_VIDEO_GAMES':
+
+      const notdat = [{ genres: ['No encontrado'], id: "4d4" }]
+
+
       return {
         ...state,
-        videogames: action.payload
+        videogames: action.payload.length === 0 ? notdat : action.payload
 
       };
 
@@ -152,8 +152,17 @@ function rootReducer(state = initialState, action) {
         ...state,
         videogames: action.payload
       };
+    case "GET_POST":
+      return {
+        ...state,
+        see: action.payload,
 
-
+      };
+    case "CLEAR_SEE":
+      return {
+        ...state,
+        see: action.payload
+      };
 
 
     default:

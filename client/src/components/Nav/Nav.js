@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGenres, clearGenres } from '../actions';
+import { getGenres, clearGenres } from '../../actions';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Nav.css'
@@ -23,7 +23,6 @@ export default function Nav({ handleFilterCreated, handleOrder,
 
 
     }, []) //  eslint-disable-line react-hooks/exhaustive-deps
-
 
 
 

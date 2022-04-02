@@ -2,16 +2,17 @@ const axios = require('axios');
 
 export function getVideoGames() {
     return function (dispatch) {
-        return fetch("http://localhost:3001/videogames")
-            .then(response => response.json())
-            .then(videogames => {
-                dispatch({
-                    type: "GET_VIDEO_GAMES", payload: videogames
-                });
-            })
-            .catch((error) => {
-                throw new Error(error)
-            })
+        try {
+            return fetch("http://localhost:3001/videogames")
+                .then(response => response.json())
+                .then(videogames => {
+                    dispatch({
+                        type: "GET_VIDEO_GAMES", payload: videogames
+                    });
+                })
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 
 }
@@ -48,16 +49,17 @@ export function orderByRating(payload) {
 
 export function getGenres() {
     return function (dispatch) {
-        return fetch("http://localhost:3001/genres")
-            .then(response => response.json())
-            .then(genres => {
-                dispatch({
-                    type: "GET_GENRES", payload: genres
-                });
-            })
-            .catch((error) => {
-                throw new Error(error)
-            })
+        try {
+            return fetch("http://localhost:3001/genres")
+                .then(response => response.json())
+                .then(genres => {
+                    dispatch({
+                        type: "GET_GENRES", payload: genres
+                    });
+                })
+        } catch (error) {
+            throw new Error(error)
+        }
     };
 
 
@@ -72,16 +74,18 @@ export function orderByGenres(payload) {
 
 export function searchVideoGames(name) {
     return function (dispatch) {
-        return fetch("http://localhost:3001/videogames?name=" + name)
-            .then(response => response.json())
-            .then(videogames => {
-                dispatch({
-                    type: "SEARCH_VIDEO_GAMES", payload: videogames
-                });
-            })
-            .catch((error) => {
-                throw new Error(error)
-            })
+
+        try {
+            return fetch("http://localhost:3001/videogames?name=" + name)
+                .then(response => response.json())
+                .then(videogames => {
+                    dispatch({
+                        type: "SEARCH_VIDEO_GAMES", payload: videogames
+                    });
+                })
+        } catch (error) {
+            throw new Error(error)
+        }
 
     };
 }
@@ -104,7 +108,10 @@ export function postVideoGames(payload) {
     return async function (dispatch) {
         try {
             var data = await axios.post("http://localhost:3001/videogames", payload);
-            return data;
+            return dispatch({
+                type: "GET_POST",
+                payload: data
+            })
 
         } catch (error) {
             throw new Error(error)
@@ -114,12 +121,17 @@ export function postVideoGames(payload) {
 
 export function getPlatforms() {
     return async function (dispatch) {
+        try {
+            var info = await axios.get("http://localhost:3001/videogames/plat")
+            return dispatch({
+                type: "GET_PLATFORMS",
+                payload: info.data
+            })
+        } catch (error) {
 
-        var info = await axios.get("http://localhost:3001/videogames/plat")
-        return dispatch({
-            type: "GET_PLATFORMS",
-            payload: info.data
-        })
+            throw new Error(error)
+
+        }
 
     }
 }
@@ -160,6 +172,12 @@ export function clearComponente() {
 export function clearGenres() {
     return {
         type: 'CLEAR_GENRES',
+        payload: []
+    }
+}
+export function clearResultPost() {
+    return {
+        type: 'CLEAR_SEE',
         payload: []
     }
 }

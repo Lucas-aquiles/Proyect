@@ -1,11 +1,11 @@
 import React from "react";
 
-import { detailsId, clearId, } from "../actions";
+import { detailsId, clearId, } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import "./Detail.css";
-import Loader from "./Loader";
+import Loader from "../Helpers/Loader";
 
 export default function Details() {
     const dispatch = useDispatch();
@@ -70,3 +70,4 @@ export default function Details() {
         </div>
     );
 }
+

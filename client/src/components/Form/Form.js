@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
-import { postVideoGames } from '../actions';
-import { useDispatch } from 'react-redux';
-import FormRama from './FormGyP';
+import { Link } from 'react-router-dom'
+import { postVideoGames, clearResultPost } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import FormRama from '../FormGyP';
 import "./Form.css"
+
 
 export default function Form() {
 
     const dispatch = useDispatch()
-    let navigate = useNavigate();
+    // let navigate = useNavigate();
+    const see1 = useSelector((state) => state.see)
 
     let [botonActivo, setBotonActivo] = useState(false);
     let [error, setError] = useState('');
@@ -26,12 +28,11 @@ export default function Form() {
 
 
     useEffect(() => {
-        setError(validate(input))
+        setError(validate(input));
+        // return () => {
+        // };
 
-    }, [input])
-
-
-
+    }, [input])//  eslint-disable-line react-hooks/exhaustive-deps
 
 
     function handleSubmit(e) {
@@ -40,7 +41,7 @@ export default function Form() {
             return alert("No se puede enviar , complete las categorias");
         } else {
             dispatch(postVideoGames(input));
-            alert("Personaje Creado");
+            alert("Video Game Creado");
             setInput({
                 name: " ",
                 description: " ",
@@ -49,9 +50,23 @@ export default function Form() {
                 genres: [],
                 platforms: [],
             })
-            navigate('/home')
         }
+
     }
+
+    if (see1.data === "error") {
+        dispatch(clearResultPost())
+        alert("Use  otro   nombre de Video Game , por favor")
+    }
+
+
+    // function myMessage() {
+    //     console.log("a")
+    // }
+
+
+
+
 
 
 

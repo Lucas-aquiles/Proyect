@@ -2,14 +2,19 @@ require('dotenv').config();
 
 const axios = require('axios');
 const server = require("express").Router();
+
 const {
     API_KEY
 } = process.env;
-const { gamesNameAll, gamesAll, getDbInfo, getAllVideoGames } = require("./function");
+const { gamesNameAll, gamesAll, getDbInfo, getAllVideoGames, createVideoGamesValidation } = require("./function");
 
 const { Videogame, Genders, Intermedio } = require('../db');
 
-server.get('/plat', async (req, res) => {
+
+
+
+
+server.get('/plat', async (req, res, next) => {
 
     try {
         const getPlatfo = await gamesAll();
@@ -26,18 +31,23 @@ server.get('/plat', async (req, res) => {
             }
         }
         res.status(200).json(newe)
+    } catch (err) {
+        next(err);
+        // console.log(err)
+        // res.status(500).send('Ocurrio un error')
 
-    } catch (error) {
-        res.status(400)
     }
+
+
 
 })
 
-server.get('/', async (req, res) => {
+server.get('/', async (req, res, next) => {
 
     const name = req.query.name
-    let videogames = await getAllVideoGames()
     try {
+        let videogames = await getAllVideoGames()
+
         if (name) {
             let videogameBd = await getDbInfo(); // me trae los juegos de bd 
 
@@ -45,35 +55,36 @@ server.get('/', async (req, res) => {
             if (videoNameBd.length === 1) { return res.status(200).send(videoNameBd) };
 
             let total = await gamesNameAll(name);// me trae los juegos de api
-            if (total) { res.status(200).send(total) } else {
-                res.status(404).send("no se encontro")
-            };
+            console.log(total)
+            if (total) { res.status(200).send(total) }
+
         } else { res.status(200).json(videogames) }
-
-
-    } catch (error) {
-        res.status(404).send("error")
+    } catch (err) {
+        next(err);
+        // console.log(err)
+        // res.status(500).send('Ocurrio un error')
 
     }
+
+
+
 });
 
-
-server.post('/', async (req, res) => {
-    let { name, description, rating, released, platforms, createdInBd, genres } = req.body;
-
-    if (name === " " || description === " " || rating === " " || released === " " || platforms === [] || genres === []) {
-        return res.status(404).send("No se enviaron datos")
+server.post('/', async (req, res, next) => {
+    try {
+        const resultado = await createVideoGamesValidation(req.body);
+    } catch (error) {
+        return res.status(200).send("error")
     }
 
     try {
+        let { name, description, rating, released, platforms, createdInBd, genres } = req.body;
         let nameChange = name.trim().charAt().toLocaleUpperCase() + name.trim().slice(1,)
-        const usuario = await Videogame.findAll({
-            where: { name: nameChange }
-        })
+        // if (name === " " || description === " " || rating === " " || released === " " || platforms === [] || genres === []) {
+        //     return res.status(404).send("No se enviaron datos")
+        // }
 
-        // responder al usuario 
-
-        if (usuario.length === 0) {
+        if (nameChange) {
             let gameCreat = await Videogame.create({
 
                 name: nameChange,
@@ -90,34 +101,26 @@ server.post('/', async (req, res) => {
             })
 
             await gameCreat.addGenders(generoDb)
-            res.status(200).send("Creado con exito");
-            //mla practica , cambiar el status
+            res.status(200).send("Creado con exitooooo");
 
 
-        } else { res.status(200).send("Otro video games tiene ese nombre") }
-        // cambiar el status a estado error 
-        // no entra el en cathc
-
-
-    } catch (error) {
-        console.error(error)
-        res.status(404)
-
+        }
+    } catch (err) {
+        // console.log(err)
+        // res.status(500).send('Ocurrio un error en el post')
+        next(err);
     }
-
 
 });
 
 
 
+server.get('/:id', async (req, res, next) => {
 
 
-server.get('/:id', async (req, res) => {
 
+    const id = req.params.id;
     try {
-
-        const id = req.params.id;
-
         if (id.length < 7) {
             let ruta = `https://api.rawg.io/api/games/${id}?key=${API_KEY}`;
 
@@ -152,10 +155,29 @@ server.get('/:id', async (req, res) => {
                 res.status(200).send(objBd)
             }
         }
-    } catch (error) {
-        console.error(error);
-
+    } catch (err) {
+        // console.log(err)
+        // res.status(500).send('Ocurrio un error')
+        next(err);
     }
 })
+
+
+
+
+function handleErrors(err, req, res, next) {
+    console.log(err);
+    res.status(500).send('Something broke!');
+};
+
+
+server.use(handleErrors)
+// server.use((error, req, res, next) => {
+//     res.status(400).json({
+//         status: "error",
+//         message: error.message,
+//     });
+// });
+
 
 module.exports = server;

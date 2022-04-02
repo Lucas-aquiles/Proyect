@@ -103,10 +103,37 @@ const getAllVideoGames = async () => {
 
 }
 
+const createVideoGamesValidation = async (data) => {
+    const { name } = data
+    if (typeof name !== 'string') {
+        throw new Error('name must be a string');
+    }
+    if (name.length >= 13 && /^[a-z]+$/i.test(name)) {
+        throw new Error('name must be at least 13 characters long')
+    }
+
+    let nameChange = name.trim().charAt().toLocaleUpperCase() + name.trim().slice(1,)
+
+    console.log(nameChange)
+    // .trim().charAt().toLocaleUpperCase() + name.trim().slice(1,)
+    const see = await Videogame.findAll({
+        where: {
+            name: nameChange
+        }
+    });
+    console.log(see.length)
+
+    if (see.length === 1) {
+        throw new Error('name is repeat')
+    }
+
+}
+
 module.exports = {
     gamesNameAll,
     gamesAll,
     getDbInfo,
-    getAllVideoGames
+    getAllVideoGames,
+    createVideoGamesValidation
 
 };

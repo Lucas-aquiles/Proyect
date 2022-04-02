@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import './Home.css'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVideoGames, filterOrigin, orderByName, orderByRating, orderByGenres, clearComponente, getVideoGamesBd } from '../actions';
-import Card from './Card.js';
-import Search from './Buscador.js';
-import Paginado from './Paginado'
-import Scroll from './ScrollToTop';
-import Nav from './Nav';
-import Loader from './Loader';
+import { getVideoGames, filterOrigin, orderByName, orderByRating, orderByGenres, clearComponente, getVideoGamesBd } from '../../actions';
+import Card from '../Card/Card.js';
+import Search from '../Buscador.js';
+import Paginado from '../Helpers/Paginado'
+import Scroll from '../Helpers/ScrollToTop';
+import Nav from '../Nav/Nav';
+import Loader from '../Helpers/Loader';
+
 
 export default function Home() {
     var imge = "https://img.freepik.com/vector-gratis/consola-juegos-letras-letrero-neon-fondo-ladrillo_1262-11854.jpg?size=338&ext=jpg";
     const dispatch = useDispatch()
+
     const allVideoGames = useSelector((state) => state.videogames)
     const [orden, setOrden] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,10 +23,10 @@ export default function Home() {
     const indexOfFirstVideoGames = indexOfLastVideoGames - videogamePerPage
     const currentVideoGames = allVideoGames.slice(indexOfFirstVideoGames, indexOfLastVideoGames)
 
+
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
-    }
-
+    };
 
 
 
