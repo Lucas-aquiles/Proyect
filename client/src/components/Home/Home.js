@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import './Home.css'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVideoGames, filterOrigin, orderByName, orderByRating, orderByGenres, clearComponente, getVideoGamesBd } from '../../actions';
+import { getVideoGames, allVideo, filterOrigin, orderByName, orderByRating, orderByGenres, clearComponente, getVideoGamesBd, DeleteIdDb } from '../../actions';
 import Card from '../Card/Card.js';
-import Search from '../Buscador.js';
+import Search from '../Search/Buscador';
 import Paginado from '../Helpers/Paginado'
 import Scroll from '../Helpers/ScrollToTop';
 import Nav from '../Nav/Nav';
@@ -30,19 +30,19 @@ export default function Home() {
 
 
 
-    useEffect(() => {
-        dispatch(getVideoGames());
+    // useEffect(() => {
+    //     dispatch(getVideoGames());
 
 
-        return () => {
-            dispatch(clearComponente());
+    // return () => {
+    //     dispatch(clearComponente());
 
-        };
-    }, []) //  eslint-disable-line react-hooks/exhaustive-deps
+    // };
+    // }, []) //  eslint-disable-line react-hooks/exhaustive-deps
 
     function handleFilterCreated(e) {
         if (e.target.value === "default") {
-            dispatch(getVideoGames())
+            dispatch(allVideo())
             setCurrentPage("1")
         }
         if (e.target.value === "created") {
@@ -75,7 +75,8 @@ export default function Home() {
 
     function handleOrderGenres(e) {
         if (e.target.value === "gen") {
-            dispatch(getVideoGames())
+            dispatch(allVideo())
+            setCurrentPage("1")
         } else {
             e.preventDefault();
             dispatch(orderByGenres(e.target.value));
@@ -86,11 +87,12 @@ export default function Home() {
     }
     function handleReseteo(e) {
         e.preventDefault();
-        dispatch(getVideoGames())
+        dispatch(getVideoGames());
         setCurrentPage("1")
         setOrden("Todos los VG");
 
     }
+
 
 
 
@@ -118,11 +120,11 @@ export default function Home() {
             </article>
 
 
-            <div className=" pag   box grid-responsive">
+            {/* <div className=" pag   box grid-responsive">
                 <Paginado videogamePerPage={videogamePerPage}
                     allVideoGames={allVideoGames.length}
                     paginado={paginado}
-                />        </div>
+                />        </div> */}
             <div className='container'> <Scroll showBelow={250} />  </div>
 
         </div>

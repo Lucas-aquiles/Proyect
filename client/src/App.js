@@ -1,11 +1,12 @@
 import './App.css';
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import LandingPage from "./components/LangPag";
+import LandingPage from "./components/LangPage/LangPag";
 
-import Home from "./components/Home";
-import Form from "./components/Form";
-import Details from './components/Details';
+import Home from "./components/Home/Home";
+import Form from "./components/Form/Form";
+import Details from './components/Details/Details';
+
 
 function App() {
   return (

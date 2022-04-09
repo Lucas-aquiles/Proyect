@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getGenres, clearGenres } from '../../actions';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+// import { getGenres, clearGenres } from '../../actions';
+// import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Nav.css'
 
@@ -9,20 +9,12 @@ import './Nav.css'
 
 export default function Nav({ handleFilterCreated, handleOrder,
     handleOrderGenres, handleReseteo }) {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const allGenres = useSelector((state) => state.genres)
 
 
 
-    useEffect(() => {
-        dispatch(getGenres())
-        return () => {
-            clearGenres()
-        }
-
-
-    }, []) //  eslint-disable-line react-hooks/exhaustive-deps
 
 
 

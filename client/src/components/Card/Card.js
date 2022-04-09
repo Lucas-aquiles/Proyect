@@ -6,6 +6,8 @@ import './Card.css'
 export default function Card({ name, img, genres, id }) {
 
 
+
+
     return (
 
         <div className='conta'   >
@@ -16,9 +18,9 @@ export default function Card({ name, img, genres, id }) {
                 <Link to={`/details/${id}`}>   <h4 className='name'>{name}</h4> </Link>
             </div>
             <div>
-                <h5 className='h5' >{genres} </h5>
+                <h5 className='h5' >{genres}      </h5>
             </div>
-        </div>
+        </div >
 
 
 

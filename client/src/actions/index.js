@@ -10,11 +10,18 @@ export function getVideoGames() {
                         type: "GET_VIDEO_GAMES", payload: videogames
                     });
                 })
-        } catch (error) {
-            throw new Error(error)
+        } catch (err) {
+            console.error(err)
+            // throw new Error(error)
         }
     }
 
+}
+export function allVideo() {
+    return {
+        type: "TRAER_VIDEO",
+
+    }
 }
 
 export function filterOrigin(payload) {
@@ -89,6 +96,7 @@ export function searchVideoGames(name) {
 
     };
 }
+
 
 // export function searchVideoGames(name) {
 //     return async function (dispatch) {
@@ -179,5 +187,21 @@ export function clearResultPost() {
     return {
         type: 'CLEAR_SEE',
         payload: []
+    }
+}
+
+export function DeleteIdDb(id) {
+    return async function (dispatch) {
+        try {
+            var data = await axios.delete("http://localhost:3001/videogames/delet?id=" + id);
+            return dispatch({
+                type: "DELETE_ID_DB",
+                payload: data
+
+            })
+        } catch (error) {
+            throw new Error(error)
+        }
+
     }
 }

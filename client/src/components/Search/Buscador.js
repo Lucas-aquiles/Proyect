@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { searchVideoGames } from '../actions';
+import { searchVideoGames } from '../../actions/index';
 
 
 import './Buscador.css';

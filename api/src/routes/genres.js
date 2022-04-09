@@ -29,7 +29,9 @@ server.get('/', async (req, res) => {
                 where: { name: el.name }
             })
         })
+
         const allGenders = await Genders.findAll();
+
         res.status(200).json(allGenders);
 
     } catch (error) {

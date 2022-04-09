@@ -1,5 +1,5 @@
 .cont {
-  background-image: url("../img/control.jpg");
+  background-image: url("../../img/control.jpg"); 
   min-height: 100vh;
   display: flex;
   color: #fff;

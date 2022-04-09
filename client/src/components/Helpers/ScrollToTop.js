@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import React from 'react';
-import manito from "../img/manito.png"
+import manito from "../../img/manito.png"
 export default function Scroll(showBelow) {
     const [show, setShow] = useState(showBelow ? false : true)
 

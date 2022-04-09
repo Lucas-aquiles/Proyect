@@ -8,6 +8,21 @@ const {
 const { Videogame, Genders, Intermedio } = require('../db');
 
 
+
+// const ObtenerTodos = async () => {
+//     let pagApi = [];
+//     for (let i = 1; i <= 40; i++) {
+//         var ruta = `https://pokeapi.co/api/v2/pokemon/${i}`
+//         const apiUrl = await axios.get(ruta, { responseType: 'json' });
+
+
+//         pagApi = pagApi.concat({ name: apiUrl.data.name, id: apiUrl.data.id })
+//     }
+//     console.log(pagApi)
+//     return pagApi;
+// }
+
+
 const gamesNameAll = async (name) => {
     var ruta = API_KEY
     var url = `https://api.rawg.io/api/games?search=${name}}&key=${ruta}`
@@ -65,6 +80,7 @@ const getDbInfo = async () => {
                 through: {
                     attributes: [],
                 },
+
             }
         })
         const dbInfoNew = dbInfo.map((e) => {
@@ -77,10 +93,9 @@ const getDbInfo = async () => {
                 released: e.released,
                 createdInBd: e.createdInBd,
                 platforms: e.platforms.map(e => e),
-                genres: e.genders.map(e => e.name).join(", ")
+                genres: e.genders.map(e => e.name).join(" , ")
             }
         })
-
         return dbInfoNew
     } catch (error) {
         console.error(error);
@@ -121,7 +136,6 @@ const createVideoGamesValidation = async (data) => {
             name: nameChange
         }
     });
-    console.log(see.length)
 
     if (see.length === 1) {
         throw new Error('name is repeat')
@@ -129,11 +143,50 @@ const createVideoGamesValidation = async (data) => {
 
 }
 
+
+const DeleteDb = async (id) => {
+    try {
+        const ResultSearch = await Videogame.destroy({
+            where: { id }
+        })
+    } catch (error) {
+        throw new Error("error delete")
+    }
+
+}
+
+const Actualizar = async (data) => {
+
+    let { description, rating, released, platforms, id } = data;
+    console.log(data)
+    const ResultUpDate = await Videogame.update({
+
+        description: description,
+        released: released,
+        rating: rating,
+        platforms: platforms,
+    },
+        { where: { id } }
+
+    )
+
+    // let generoDb = await Genders.findAll({
+    //     where: {
+    //         name: genres
+    //     }
+    // })
+
+    // let guardar = await ResultUpDate.addGenders(generoDb)
+}
+
+
 module.exports = {
     gamesNameAll,
     gamesAll,
     getDbInfo,
     getAllVideoGames,
-    createVideoGamesValidation
+    createVideoGamesValidation,
+    DeleteDb,
+    Actualizar,
 
 };

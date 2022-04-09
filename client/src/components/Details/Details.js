@@ -1,11 +1,13 @@
 import React from "react";
 
-import { detailsId, clearId, } from "../../actions";
+import { detailsId, clearId, DeleteIdDb, getVideoGames, clearComponente } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import "./Detail.css";
 import Loader from "../Helpers/Loader";
+
+
 
 export default function Details() {
     const dispatch = useDispatch();
@@ -17,14 +19,37 @@ export default function Details() {
     useEffect(() => {
         dispatch(detailsId(addres));
 
-        // dispatch(clearComponente())
 
         return () => {
             dispatch(clearId());
+
+
         };
     }, [dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    function DeleteBd(e) {
+        alert("esta por borrar un videogames")
+        dispatch(clearComponente())
+
+        dispatch(getVideoGames())
+
+        dispatch(DeleteIdDb(addres))
+    }
+
+
+
+
+
+
+
+
+
     const dVG = useSelector((state) => state.details);
+
+
+
+
+
 
     return dVG.length === 0 ? (
         <Loader />
@@ -64,8 +89,9 @@ export default function Details() {
             <div className="c-details1">
                 <h5 className="description"> {dVG.description} </h5>
                 <Link to="/home">
-                    <button className="bottom"> VOLVER</button>
+                    <button className="bottom"> VOLVER   </button>   {addres.length > 7 ? <button className="bottom" onClick={DeleteBd}  > Delete</button> : console.log()}
                 </Link>
+
             </div>
         </div>
     );

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
-import { postVideoGames, clearResultPost } from '../../actions';
+import { postVideoGames, clearResultPost, getVideoGames } from '../../actions/index';
 import { useDispatch, useSelector } from 'react-redux';
-import FormRama from '../FormGyP';
+import FormRama from './FormGyP';
 import "./Form.css"
 
 
@@ -11,7 +11,7 @@ export default function Form() {
     const dispatch = useDispatch()
     // let navigate = useNavigate();
     const see1 = useSelector((state) => state.see)
-
+    console.log(see1)
     let [botonActivo, setBotonActivo] = useState(false);
     let [error, setError] = useState('');
 
@@ -41,7 +41,6 @@ export default function Form() {
             return alert("No se puede enviar , complete las categorias");
         } else {
             dispatch(postVideoGames(input));
-            alert("Video Game Creado");
             setInput({
                 name: " ",
                 description: " ",
@@ -57,16 +56,11 @@ export default function Form() {
     if (see1.data === "error") {
         dispatch(clearResultPost())
         alert("Use  otro   nombre de Video Game , por favor")
+    } else if (see1.data === "Creado con exitooooo") {
+        dispatch(clearResultPost())
+        alert("Video Game Creado");
+
     }
-
-
-    // function myMessage() {
-    //     console.log("a")
-    // }
-
-
-
-
 
 
 
@@ -183,6 +177,12 @@ export default function Form() {
 
         return errors;
     };
+    function ResetearAllVideos() {
+        dispatch((getVideoGames()))
+    }
+
+
+
 
 
     return (
@@ -194,7 +194,7 @@ export default function Form() {
 
 
                 <div className='item5'>
-                    <form onSubmit={e => handleSubmit(e)}>
+                    <form name='form' onSubmit={e => handleSubmit(e)}>
 
                         <FormRama handleSelect={handleSelect} handleSelect1={handleSelect1} name={input.name} description={input.description} rating={input.rating}
                             released={input.released}
@@ -211,7 +211,7 @@ export default function Form() {
                 </div>
 
                 <div className='item5'>
-                    <Link to='/home'><button className='butonn'> Atras</button></Link>
+                    <Link to='/home'><button className='butonn' onClick={ResetearAllVideos}> Atras</button></Link>
 
                 </div>
             </div>

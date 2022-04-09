@@ -1,10 +1,13 @@
 const initialState = {
   videogames: [],
-  // allVideoGames: [],
+  allVideoGames: [],
   genres: [],
   platforms: [],
   details: [],
   see: []
+
+
+
 }
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -12,11 +15,24 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         videogames: action.payload,
-        // allVideoGames: action.payload
+        allVideoGames: action.payload
 
       };
 
+
+    case "TRAER_VIDEO":
+      const save = state.allVideoGames
+
+      return {
+        ...state,
+        videogames: save
+
+
+      }
+
+
     case "FILTER_ORIGIN":
+
       const allVideoGames2 = state.videogames
 
       const statusFiltrado = action.payload === "api" ? allVideoGames2.filter(el => !el.createdInBd) :
@@ -32,7 +48,7 @@ function rootReducer(state = initialState, action) {
 
     case 'FILTER_ORIGIN_CREATE':
       const error = [{ genres: 'No encontrado', id: "3d22" }]
-      const allVg = state.videogames.filter(el => el.createdInBd)
+      const allVg = state.videogames.filter(e => e.createdInBd)
       // const result = !allVg ? allVg.push("error") : allVg.filter(el => el.createdInBd);
 
 
@@ -163,6 +179,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         see: action.payload
       };
+
+    case "DELETE_ID_BD":
+      return {
+        ...state,
+      }
+
 
 
     default:

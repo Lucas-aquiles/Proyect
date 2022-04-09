@@ -6,11 +6,39 @@ const server = require("express").Router();
 const {
     API_KEY
 } = process.env;
-const { gamesNameAll, gamesAll, getDbInfo, getAllVideoGames, createVideoGamesValidation } = require("./function");
+const { gamesNameAll, gamesAll, getDbInfo, getAllVideoGames, createVideoGamesValidation, DeleteDb, Actualizar } = require("./function");
 
 const { Videogame, Genders, Intermedio } = require('../db');
 
 
+
+server.put('/put', async (req, res, next) => {
+
+    let data = req.body;
+    try {
+        const save = await Actualizar(data);
+
+        res.send("ok")
+    }
+    catch (err) {
+        next(err);
+    }
+})
+
+
+
+
+server.delete('/delet', async (req, res, next) => {
+    let id = req.query.id
+
+    try {
+        DeleteDb(id)
+        res.status(200).send("Eliminado con exito")
+    } catch (err) {
+        next(err);
+    }
+
+})
 
 
 
@@ -79,6 +107,7 @@ server.post('/', async (req, res, next) => {
 
     try {
         let { name, description, rating, released, platforms, createdInBd, genres } = req.body;
+        console.log("mirar", req.body, " mirar")
         let nameChange = name.trim().charAt().toLocaleUpperCase() + name.trim().slice(1,)
         // if (name === " " || description === " " || rating === " " || released === " " || platforms === [] || genres === []) {
         //     return res.status(404).send("No se enviaron datos")
@@ -94,9 +123,11 @@ server.post('/', async (req, res, next) => {
                 platforms: platforms,
                 createdInBd
             })
+
             let generoDb = await Genders.findAll({
                 where: {
                     name: genres
+
                 }
             })
 
@@ -139,10 +170,11 @@ server.get('/:id', async (req, res, next) => {
             }
         }
 
+
         if (id.length > 7) {
             let infoBd = await getAllVideoGames()
-            const idBd = infoBd.filter(e => e.id === id)
 
+            const idBd = infoBd.filter(e => e.id === id)
             if (idBd) {
                 const objBd = {
                     name: idBd[0].name,

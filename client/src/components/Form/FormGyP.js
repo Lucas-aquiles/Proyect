@@ -1,8 +1,8 @@
 import React from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
-import { getGenres, getPlatforms } from '../actions';
-import { useDispatch, useSelector } from 'react-redux';
+// import { getPlatforms } from '../../actions/index';
+import { useSelector } from 'react-redux';
 import "./FormGyP.css"
 
 
@@ -11,18 +11,18 @@ export default function FormRama({ handleChange, handleSelect1, handleSelect, ge
     errorDescription, errorRating, errorReleased, errorGenres, errorPlatforms
 }) {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const allGenres = useSelector((state) => state.genres);
     const allPlatforms = useSelector((state) => state.platforms);
 
-    useEffect(() => {
-        dispatch(getGenres());
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     dispatch(getGenres());
+    // }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    useEffect(() => {
-        dispatch(getPlatforms())
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+
+    // }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 
 
