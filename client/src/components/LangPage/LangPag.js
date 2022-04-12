@@ -33,7 +33,9 @@ export default function LandingPage() {
         <div className='cont'>
 
             <div className='ite'>
-                <Link to="/home"><button className='bt'>Ingresar</button>  </Link>
+                <Link to="/home">
+                    <button className='bt'>Ingresar</button>
+                </Link>
             </div>
         </div>
     );
